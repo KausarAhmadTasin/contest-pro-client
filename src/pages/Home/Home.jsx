@@ -1,13 +1,14 @@
 import { Helmet } from "react-helmet";
+import Banner from "../../layouts/Banner/Banner";
 
 const Home = () => {
   return (
-    <div className="pt-3 py-96 min-h-screen">
+    <div className="pt-20 py-96 min-h-screen">
       <Helmet>
         <title>Home - ContestPro</title>
         <meta name="description" content="Helmet application" />
       </Helmet>
-      <p>This is home</p>
+      <Banner />
     </div>
   );
 };

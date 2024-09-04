@@ -1,13 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { SlArrowDown } from "react-icons/sl";
 
 const Navbar = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Read initial theme state from localStorage
     const savedTheme = localStorage.getItem("theme");
@@ -15,6 +12,7 @@ const Navbar = () => {
   });
 
   const { user, logOut } = useContext(AuthContext);
+  const location = useLocation();
 
   useEffect(() => {
     // Apply the theme to the document
@@ -25,6 +23,12 @@ const Navbar = () => {
 
   const handleThemeToggle = () => {
     setIsDarkMode(!isDarkMode);
+  };
+
+  const handleLogOut = () => {
+    logOut().then(() => {
+      toast.success("Signed Out!");
+    });
   };
 
   // Swap control
@@ -48,7 +52,7 @@ const Navbar = () => {
 
         {/* moon icon */}
         <svg
-          className="swap-off text-gray-600 mr-3 h-5 w-5 fill-current"
+          className="swap-off text-gray-200 mr-3 h-5 w-5 fill-current"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -58,46 +62,32 @@ const Navbar = () => {
     </>
   );
 
-  // Show navbar when scrolling
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > 0 || isHovered);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHovered]);
-
-  // Handle mouse enter and leave
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    setIsVisible(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    if (window.scrollY === 0) {
-      setIsVisible(false);
-    }
-  };
-
-  const handleLogOut = () => {
-    logOut().then(() => {
-      toast.success("Signed Out!");
-    });
-  };
+  const navLinksMain = (
+    <>
+      <ul>
+        <Link to="/">
+          <li
+            className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
+              location.pathname === "/"
+                ? "underline decoration-white decoration-2 outline-offset-4"
+                : ""
+            }`}
+          >
+            Home
+          </li>
+        </Link>
+      </ul>
+    </>
+  );
 
   return (
     <div
-      className={`navbar z-40 bg-[#001f3f] text-white fixed w-full transition-transform duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      }`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className={`navbar fixed z-40 flex justify-between bg-[#0c243b] text-white w-full transition-transform duration-300`}
     >
-      <div className="flex-1">
+      <div className="">
         <a className="btn btn-ghost text-xl">ContestPro</a>
       </div>
+      <div className="flex-gorw">{navLinksMain}</div>
       <div className="flex-none">
         {swap}
         {user?.photoURL && (
@@ -112,7 +102,7 @@ const Navbar = () => {
               </PopoverButton>
               <PopoverPanel
                 anchor="bottom"
-                className="flex mt-5 bg-gray-700 py-5 px-5 w-1/6 text-center flex-col divide-y divide-white/5 rounded-xl bg-white/5 text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-1 data-[closed]:opacity-0"
+                className="flex mt-3 bg-black/80 py-5 px-5 w-1/6 text-center flex-col divide-y divide-white/5 rounded-xl text-sm/6 transition duration-200 ease-in-out"
               >
                 <p className="block rounded-lg py-2 px-3 transition font-semibold text-gray-100">
                   {user && user?.displayName}

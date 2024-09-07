@@ -11,7 +11,6 @@ import {
   GithubAuthProvider,
 } from "firebase/auth";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 import auth from "../firebase/config.firebase";
 
 export const AuthContext = createContext(null);
@@ -70,29 +69,29 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      const userEmail = currentUser?.email || user?.email;
-      const loggedUser = { email: userEmail };
+      // const userEmail = currentUser?.email || user?.email;
+      // const loggedUser = { email: userEmail };
       setUser(currentUser);
 
       setLoading(false);
 
-      if (currentUser) {
-        axios
-          .post(`https://dream-jobs-server-nine.vercel.app/jwt`, loggedUser, {
-            withCredentials: true,
-          })
-          .then((res) => {
-            console.log(res.data);
-          });
-      } else {
-        axios.post(
-          `https://dream-jobs-server-nine.vercel.app/logout`,
-          loggedUser,
-          {
-            withCredentials: true,
-          }
-        );
-      }
+      // if (currentUser) {
+      //   axios
+      //     .post(`https://dream-jobs-server-nine.vercel.app/jwt`, loggedUser, {
+      //       withCredentials: true,
+      //     })
+      //     .then((res) => {
+      //       console.log(res.data);
+      //     });
+      // } else {
+      //   axios.post(
+      //     `https://dream-jobs-server-nine.vercel.app/logout`,
+      //     loggedUser,
+      //     {
+      //       withCredentials: true,
+      //     }
+      //   );
+      // }
     });
 
     return () => {

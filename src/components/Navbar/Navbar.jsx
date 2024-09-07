@@ -79,7 +79,7 @@ const Navbar = () => {
         <Link to="/allContests">
           <li
             className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
-              location.pathname === "/addContest"
+              location.pathname === "/allContests"
                 ? "underline decoration-white decoration-2 outline-offset-4"
                 : ""
             }`}
@@ -90,7 +90,7 @@ const Navbar = () => {
         <Link to="/dashboard">
           <li
             className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
-              location.pathname === "/addContest"
+              location.pathname === "/dashboard"
                 ? "underline decoration-white decoration-2 outline-offset-4"
                 : ""
             }`}

@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Banner = () => {
   const location = useLocation();
@@ -25,14 +25,14 @@ const Banner = () => {
           <input
             type="text"
             placeholder="Search contests by tags..."
-            className="w-full max-w-lg px-4 py-2 rounded-md focus:outline-none bg-white dark:bg-gray-400 text-gray-600 dark:text-gray-200 focus:ring focus:ring-white"
+            className="w-full max-w-lg px-4 py-2 rounded-s-md focus:outline-none bg-white dark:bg-slate-700 text-gray-600 dark:text-gray-200 focus:ring focus:ring-white"
           />
-          <button className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+          <button className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-e-md">
             Search
           </button>
         </div>
 
-        {/* Conditional Underline on Home link */}
+        {/*  links  */}
         <nav className="mt-6">
           <ul className="flex justify-center gap-4">
             <li
@@ -40,13 +40,13 @@ const Banner = () => {
                 location.pathname === "/" ? "underline decoration-white" : ""
               }`}
             >
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li className="hover:bg-[#183753] rounded-md py-1 px-2">
-              <a href="/all-contests">All Contests</a>
+              <Link to="/allContests">All Contests</Link>
             </li>
             <li className="hover:bg-[#183753] rounded-md py-1 px-2">
-              <a href="/signIn">Sign In</a>
+              <Link to="/signUp">Sign Up</Link>
             </li>
           </ul>
         </nav>

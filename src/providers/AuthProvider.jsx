@@ -10,7 +10,6 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
 } from "firebase/auth";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import auth from "../firebase/config.firebase";
@@ -24,24 +23,15 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
 
-  const createUser = (email, password, name, photo, form) => {
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const currentUser = userCredential.user;
-        return updateProfile(currentUser, {
-          displayName: name,
-          photoURL: photo,
-        }).then(() => {
-          toast.success("Successfully registered!");
-          form.reset();
-        });
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+  const createUser = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const updateUserProfile = (name, photo) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
   };
 
   const signIn = (email, password) => {
@@ -118,6 +108,7 @@ const AuthProvider = ({ children }) => {
     loading,
     googleLogin,
     githubLogin,
+    updateUserProfile,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

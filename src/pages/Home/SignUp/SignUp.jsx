@@ -1,15 +1,18 @@
 import { useContext, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { AuthContext } from "../../../providers/AuthProvider";
 import SocialLinks from "../../../components/SocialLinks/SocialLinks";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const [textPassword, setTextPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
 
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -40,7 +43,24 @@ const SignUp = () => {
       return;
     }
 
-    createUser(email, password, name, photo, form);
+    createUser(email, password, name, photo, form).then(() => {
+      // const loggedUser = result.user;
+      updateUserProfile(name, photo)
+        .then(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Signed Up",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          form.reset();
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   };
 
   return (
@@ -48,7 +68,7 @@ const SignUp = () => {
       <Helmet>
         <title>Sign Up - Contest Pro</title>
       </Helmet>
-      <div className="hero bg-[#F3F4F6] dark:bg-[#27282c] min-h-screen">
+      <div className="hero bg-[#F3F4F6] pt-10 dark:bg-[#27282c] min-h-screen">
         <div className="card shadow-lg bg-white dark:bg-[#303238] my-10 rounded-mdborder-gray-200 w-11/12 md:w-3/4 lg:w-1/3">
           <form onSubmit={handleRegister} className="card-body">
             <div className="form-control">

@@ -64,7 +64,7 @@ const Navbar = () => {
 
   const navLinksMain = (
     <>
-      <ul>
+      <ul className="flex">
         <Link to="/">
           <li
             className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
@@ -74,6 +74,28 @@ const Navbar = () => {
             }`}
           >
             Home
+          </li>
+        </Link>
+        <Link to="/allContests">
+          <li
+            className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
+              location.pathname === "/addContest"
+                ? "underline decoration-white decoration-2 outline-offset-4"
+                : ""
+            }`}
+          >
+            All Contest
+          </li>
+        </Link>
+        <Link to="/dashboard">
+          <li
+            className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
+              location.pathname === "/addContest"
+                ? "underline decoration-white decoration-2 outline-offset-4"
+                : ""
+            }`}
+          >
+            Dashboard
           </li>
         </Link>
       </ul>
@@ -107,7 +129,7 @@ const Navbar = () => {
                 <p className="block rounded-lg py-2 px-3 transition font-semibold text-gray-100">
                   {user && user?.displayName}
                 </p>
-                <Link>
+                <Link to="/dashboard">
                   <p className="block rounded-lg py-2 px-3 text-gray-200 my-2 transition hover:bg-white/5">
                     Dashboard
                   </p>

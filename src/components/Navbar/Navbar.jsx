@@ -107,7 +107,9 @@ const Navbar = () => {
       className={`navbar fixed z-40 flex justify-between bg-[#0c243b] text-white w-full transition-transform duration-300`}
     >
       <div className="">
-        <a className="btn btn-ghost text-xl">ContestPro</a>
+        <Link to="/">
+          <p className="btn btn-ghost text-xl">ContestPro</p>
+        </Link>
       </div>
       <div className="flex-gorw">{navLinksMain}</div>
       <div className="flex-none">

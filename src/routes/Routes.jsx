@@ -9,6 +9,7 @@ import NotFound from "../pages/NotFound/NotFound";
 import MyCreatedContets from "../pages/Dashboard/ContestCreator/MyCreatedContets/MyCreatedContets";
 import SubmittedContests from "../pages/Dashboard/ContestCreator/SubmittedContests/SubmittedContests";
 import AllContests from "../pages/AllContests/AllContests";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoutes>
+        <Dashboard />
+      </PrivateRoutes>
+    ),
     children: [
       {
         path: "/dashboard/addContest",

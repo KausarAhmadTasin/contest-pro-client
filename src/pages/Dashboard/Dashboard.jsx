@@ -8,7 +8,7 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-      <div className="flex w-full gap-x-5 pt-16 min-h-screen bg-[#f5f5f5] text-[#333333)]">
+      <div className="flex w-full gap-x-5 pt-16 min-h-screen bg-[#f5f5f5] dark:bg-[#2f2f30] text-[#333333)]">
         <div className="w-1/5 min-h-full bg-[#6380a3] text-white">
           <ul className="menu text-base">
             <li className="mt-2">

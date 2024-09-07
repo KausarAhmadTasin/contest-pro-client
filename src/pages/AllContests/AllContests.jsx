@@ -5,7 +5,7 @@ const AllContests = () => {
   const axiosPublic = useAxiosPublic();
 
   const { data: contests = [] } = useQuery({
-    queryKey: "contests",
+    queryKey: ["contests"],
     queryFn: async () => {
       const res = await axiosPublic.get("/contests");
       return res.data;

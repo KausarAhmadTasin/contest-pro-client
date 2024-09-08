@@ -33,30 +33,42 @@ const MyCreatedContests = () => {
   }
 
   const handleDeleteClick = (id) => {
-    axiosSecure
-      .delete(`/contests/${id}`)
-      .then((res) => {
-        if (res.data.deletedCount > 0) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Contest Deleted!",
-            showConfirmButton: false,
-            timer: 1500,
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you realy want to delete this contest?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(`/contests/${id}`)
+          .then((res) => {
+            if (res.data.deletedCount > 0) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Contest Deleted!",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              refetch();
+            }
+          })
+          .catch(() => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Could not delete!",
+              customClass: {
+                confirmButton: "bg-[#F97316]",
+              },
+            });
           });
-          refetch();
-        }
-      })
-      .catch(() => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Could not delete!",
-          customClass: {
-            confirmButton: "bg-[#F97316]",
-          },
-        });
-      });
+      }
+    });
   };
 
   return (
@@ -107,7 +119,7 @@ const MyCreatedContests = () => {
 
                 <button
                   onClick={() => handleDeleteClick(contest._id)}
-                  className="btn mt-2 bg-red-500 text-white"
+                  className="btn mt-2 border-none hover:bg-red-400 bg-red-500 text-white"
                 >
                   Delete <IoMdCloseCircleOutline className="text-lg" />
                 </button>

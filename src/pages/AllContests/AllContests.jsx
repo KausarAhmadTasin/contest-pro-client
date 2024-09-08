@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet";
+import PrimaryBtn from "../../components/PrimaryBtn/PrimaryBtn";
 
 const AllContests = () => {
   const axiosPublic = useAxiosPublic();
@@ -15,6 +17,9 @@ const AllContests = () => {
 
   return (
     <>
+      <Helmet>
+        <title>All Contests - Contest Pro</title>
+      </Helmet>
       <div className="min-h-screen p-6 dark:bg-[#2f2f30]">
         <h1 className="text-2xl font-bold mb-4">All Contests</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -53,9 +58,7 @@ const AllContests = () => {
               <div className="flex justify-center w-full mt-4">
                 <Link to={`/contestDetails/${contest._id}`}>
                   {" "}
-                  <button className="btn bg-[#F97316] hover:bg-[#f39b5b] border-none text-white">
-                    Details
-                  </button>
+                  <PrimaryBtn>Details</PrimaryBtn>
                 </Link>
               </div>
             </div>

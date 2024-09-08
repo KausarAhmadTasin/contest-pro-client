@@ -12,15 +12,15 @@ const Dashboard = () => {
         <div className="w-1/5 min-h-full bg-[#6380a3] text-white">
           <ul className="menu text-base">
             <li className="mt-2">
-              <NavLink to="/dashboard/addContest">
-                <IoIosAddCircleOutline className="text-lg" />
-                Add Contest
+              <NavLink to="/dashboard" end>
+                <GiStairsGoal className="text-lg" />
+                My Created Contests
               </NavLink>
             </li>
             <li className="mt-2">
-              <NavLink to="/dashboard/myCreatedContests">
-                <GiStairsGoal className="text-lg" />
-                My Created Contests
+              <NavLink to="/dashboard/addContest">
+                <IoIosAddCircleOutline className="text-lg" />
+                Add Contest
               </NavLink>
             </li>
             <li className="mt-2">

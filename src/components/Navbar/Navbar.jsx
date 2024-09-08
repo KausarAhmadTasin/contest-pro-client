@@ -111,7 +111,7 @@ const Navbar = () => {
           <p className="btn btn-ghost text-xl">ContestPro</p>
         </Link>
       </div>
-      <div className="flex-gorw">{navLinksMain}</div>
+      <div className="hidden lg:block flex-gorw">{navLinksMain}</div>
       <div className="flex-none">
         {swap}
         {user?.photoURL && (

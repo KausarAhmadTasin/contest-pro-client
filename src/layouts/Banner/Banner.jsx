@@ -5,7 +5,7 @@ const Banner = () => {
 
   return (
     <section
-      className="relative container mx-auto rounded-xl bg-cover bg-center bg-no-repeat h-[60vh] md:h-[80vh] flex items-center justify-center"
+      className="relative md:container md:mx-auto mx-2 rounded-xl bg-cover bg-center bg-no-repeat h-[60vh] md:h-[80vh] flex items-center justify-center"
       style={{
         backgroundImage:
           'url("https://i.ibb.co/pKPdgLD/ariel-Hk-N64-BISu-QA-unsplash.jpg")',

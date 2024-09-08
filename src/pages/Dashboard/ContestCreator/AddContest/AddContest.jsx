@@ -41,8 +41,6 @@ const AddContestForm = () => {
       },
     });
 
-    console.log(res.data.data.display_url);
-
     if (res.data.success) {
       const contest = {
         contestName: form.contestDeadline.value,
@@ -90,7 +88,7 @@ const AddContestForm = () => {
       <Helmet>
         <title>Add Contests - ContestPro</title>
       </Helmet>
-      <div className="container mx-auto py-5 w-full">
+      <div className="container mx-auto py-5 w-full ">
         <form
           onSubmit={handleSubmit}
           className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg"

@@ -10,6 +10,7 @@ import MyCreatedContets from "../pages/Dashboard/ContestCreator/MyCreatedContets
 import SubmittedContests from "../pages/Dashboard/ContestCreator/SubmittedContests/SubmittedContests";
 import AllContests from "../pages/AllContests/AllContests";
 import PrivateRoutes from "./PrivateRoutes";
+import ContestDetail from "../pages/CotestDetail/ContestDetail";
 
 const router = createBrowserRouter([
   {
@@ -21,10 +22,17 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-
       {
         path: "/allContests",
         element: <AllContests />,
+      },
+      {
+        path: "/contestDetails/:id",
+        element: (
+          <PrivateRoutes>
+            <ContestDetail />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/signUp",
@@ -49,7 +57,7 @@ const router = createBrowserRouter([
         element: <AddContest />,
       },
       {
-        path: "/dashboard/myCreatedContests",
+        path: "/dashboard",
         element: <MyCreatedContets />,
       },
       {

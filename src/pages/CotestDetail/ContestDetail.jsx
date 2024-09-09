@@ -170,25 +170,25 @@ const ContestDetail = () => {
                   <input
                     type="text"
                     placeholder="Participant Name"
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full dark:bg-[#1D232A] bg-white text-gray-600 dark:text-gray-200"
                     required
                     name="participant_name"
                     value={user?.displayName}
                     readOnly
                   />
-                  <p className="pt-1 text-sm text-gray-500 dark:text-gray-200">
+                  <p className="pt-1 ml-2 text-sm text-gray-500 dark:text-gray-200">
                     You cannot change user name
                   </p>
                   <input
                     type="text"
                     placeholder="Participant Email"
-                    className="input input-bordered w-full mt-4"
+                    className="input input-bordered w-full mt-4 dark:bg-[#1D232A] bg-white text-gray-600 dark:text-gray-200"
                     value={user?.email}
                     name="participant_email"
                     required
                     readOnly
                   />
-                  <p className="pt-1 text-sm text-gray-500 dark:text-gray-200">
+                  <p className="pt-1 ml-2 text-sm text-gray-500 dark:text-gray-200">
                     You cannot change user email
                   </p>
 
@@ -196,10 +196,10 @@ const ContestDetail = () => {
                     type="url"
                     name="task_link"
                     placeholder="Enter submission link"
-                    className="input input-bordered w-full mt-4"
+                    className="input input-bordered w-full mt-4 dark:bg-[#1D232A] bg-white text-gray-600 dark:text-gray-200"
                     required
                   />
-                  <p className="pt-1 text-sm text-gray-500 dark:text-gray-200 mb-4">
+                  <p className="pt-1 ml-2 text-sm text-gray-500 dark:text-gray-200 mb-4">
                     Give the drive link of your task
                   </p>
                   <input

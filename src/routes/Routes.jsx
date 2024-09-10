@@ -11,6 +11,7 @@ import SubmittedContests from "../pages/Dashboard/ContestCreator/SubmittedContes
 import AllContests from "../pages/AllContests/AllContests";
 import PrivateRoutes from "./PrivateRoutes";
 import ContestDetail from "../pages/CotestDetail/ContestDetail";
+import SubmissionDetails from "../pages/Dashboard/ContestCreator/SubmissonDetails/SubmissionDetails";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/submittedContests",
         element: <SubmittedContests />,
+      },
+      {
+        path: "/dashboard/submissionDetails",
+        element: <SubmissionDetails />,
       },
     ],
   },

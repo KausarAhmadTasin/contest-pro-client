@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { GiStairsGoal } from "react-icons/gi";
+import { VscFileSubmodule } from "react-icons/vsc";
 
 const Dashboard = () => {
   return (
@@ -25,7 +26,7 @@ const Dashboard = () => {
             </li>
             <li className="mt-2">
               <NavLink to="/dashboard/submittedContests">
-                <GiStairsGoal className="text-lg" />
+                <VscFileSubmodule className="text-lg" />
                 Submitted Contests
               </NavLink>
             </li>

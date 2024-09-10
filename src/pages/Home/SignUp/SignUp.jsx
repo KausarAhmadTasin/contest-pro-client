@@ -5,10 +5,14 @@ import { Helmet } from "react-helmet";
 import { AuthContext } from "../../../providers/AuthProvider";
 import SocialLinks from "../../../components/SocialLinks/SocialLinks";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [textPassword, setTextPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+
+  const axiosPublic = useAxiosPublic();
 
   const { createUser, updateUserProfile } = useContext(AuthContext);
 
@@ -43,24 +47,39 @@ const SignUp = () => {
       return;
     }
 
-    createUser(email, password, name, photo, form).then(() => {
-      // const loggedUser = result.user;
-      updateUserProfile(name, photo)
-        .then(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Signed Up",
-            showConfirmButton: false,
-            timer: 1500,
+    createUser(email, password, name, photo, form)
+      .then((result) => {
+        const loggedUser = result.user;
+
+        updateUserProfile(name, photo)
+          .then(async () => {
+            const userInfo = {
+              email: loggedUser.email,
+              name: loggedUser.displayName || name,
+              role: "user",
+            };
+
+            await axiosPublic.post("/users", userInfo).then(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Signed Up",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              form.reset();
+              navigate("/");
+            });
+          })
+          .catch((err) => {
+            console.log("Error updating user profile:", err);
+            toast.error("Sign up failed!");
           });
-          form.reset();
-          navigate("/");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+      })
+      .catch((err) => {
+        console.log("Error signing up user:", err);
+        toast.error("Sign up failed!");
+      });
   };
 
   return (

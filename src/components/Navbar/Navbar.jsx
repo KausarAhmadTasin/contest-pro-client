@@ -3,6 +3,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -118,11 +119,16 @@ const Navbar = () => {
           <>
             <Popover className="relative z-50">
               <PopoverButton className="flex mr-4 gap-x-2 items-center text-sm/6 font-semibold text-white/50 focus:outline-none data-[active]:text-white data-[hover]:text-white data-[focus]:outline-1 data-[focus]:outline-white">
-                <img
-                  className="h-9 w-9 rounded-full"
-                  src={user.photoURL}
-                  alt=""
-                />
+                <div className="relative">
+                  <img
+                    className="h-9 w-9 rounded-full"
+                    src={user.photoURL}
+                    alt=""
+                  />
+                  <div className="absolute -bottom-1 -right-1 z-10 bg-white rounded-full flex items-center justify-center">
+                    <IoIosArrowDown className=" text-blue-600 font-bold text-base" />
+                  </div>
+                </div>
               </PopoverButton>
               <PopoverPanel
                 anchor="bottom"

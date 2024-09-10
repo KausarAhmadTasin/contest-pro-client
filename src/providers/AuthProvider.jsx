@@ -47,13 +47,13 @@ const AuthProvider = ({ children }) => {
 
   const googleLogin = () => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        setUser(result.user);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    return signInWithPopup(auth, googleProvider);
+    // .then((result) => {
+    //   setUser(result.user);
+    // })
+    // .finally(() => {
+    //   setLoading(false);
+    // });
   };
 
   const githubLogin = () => {

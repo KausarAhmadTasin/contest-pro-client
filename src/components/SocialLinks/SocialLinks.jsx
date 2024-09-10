@@ -3,19 +3,30 @@ import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SocialLinks = () => {
   const { googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
   const hangleGoogleLogin = () => {
     googleLogin()
-      .then(() => {
-        toast.success("Signed in!");
-        navigate("/");
+      .then(async (res) => {
+        const userInfo = {
+          email: res.user?.email,
+          name: res.user?.displayName,
+          role: "user",
+        };
+        console.log(userInfo);
+        await axiosPublic.post("/users", userInfo).then(() => {
+          toast.success("Signed in!");
+          navigate("/");
+        });
       })
-      .catch(() => {
+      .catch((err) => {
         toast.error("Signing in failed!");
+        console.log("failed", err);
       });
   };
 

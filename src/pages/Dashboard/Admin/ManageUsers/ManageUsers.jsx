@@ -61,7 +61,7 @@ const ManageUsers = () => {
       <Helmet>
         <title>Manage Users - ContestPro</title>
       </Helmet>
-      <div className="container mx-auto px-4 py-8 pt-20">
+      <div className="container mx-auto px-4 py-8 pt-4">
         <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-200 mb-6">
           Manage Users
         </h1>

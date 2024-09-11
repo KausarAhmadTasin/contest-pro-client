@@ -14,6 +14,10 @@ import ContestDetail from "../pages/CotestDetail/ContestDetail";
 import SubmissionDetails from "../pages/Dashboard/ContestCreator/SubmissonDetails/SubmissionDetails";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import ManageContests from "../pages/Dashboard/Admin/ManageContests/ManageContests";
+import MyParticipatedContests from "../pages/Dashboard/User/MyParticipatedContests/MyParticipatedContests";
+import MyWinningContests from "../pages/Dashboard/User/MyWinnigContests/MyWinningContests";
+import Profile from "../pages/Dashboard/User/Profile/Profile";
+import Payment from "../pages/Dashboard/Payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +82,22 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/manageContests",
         element: <ManageContests />,
+      },
+      {
+        path: "/dashboard/myParticipatedContests",
+        element: <MyParticipatedContests />,
+      },
+      {
+        path: "/dashboard/myWinningContests",
+        element: <MyWinningContests />,
+      },
+      {
+        path: "/dashboard/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/dashboard/payment",
+        element: <Payment />,
       },
     ],
   },

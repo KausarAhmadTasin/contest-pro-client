@@ -1,19 +1,12 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import PrimaryBtn from "../../components/PrimaryBtn/PrimaryBtn";
-import { useState, useEffect, useContext } from "react";
-import { IoMdCloseCircleOutline } from "react-icons/io";
 import { Helmet } from "react-helmet";
-import { AuthContext } from "../../providers/AuthProvider";
-import Swal from "sweetalert2";
 
 const ContestDetail = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
-  const { user } = useContext(AuthContext);
 
   const {
     data: contest,
@@ -28,20 +21,6 @@ const ContestDetail = () => {
     enabled: !!id,
   });
 
-  // Close modal on ESC key press
-  useEffect(() => {
-    const handleEsc = (event) => {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      }
-    };
-    window.addEventListener("keydown", handleEsc);
-
-    return () => {
-      window.removeEventListener("keydown", handleEsc);
-    };
-  }, []);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -49,44 +28,6 @@ const ContestDetail = () => {
   if (isError) {
     return <div>Error loading contest details.</div>;
   }
-
-  const handleTaskSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-
-    const submissionData = {
-      constest_id: contest._id,
-      creator_email: contest.creator.email,
-      contest_title: contest.contestName,
-      contest_prize: contest.prizeMoney,
-      participant_name: form.participant_name.value,
-      participant_email: form.participant_email.value,
-      task_link: form.task_link.value,
-    };
-
-    try {
-      const res = await axiosSecure.post("/participants", submissionData);
-      if (res.data.insertedId) {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Task submitted!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setIsOpen(false);
-      }
-    } catch {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Could not submit",
-        customClass: {
-          confirmButton: "bg-[#F97316]",
-        },
-      });
-    }
-  };
 
   return (
     <>
@@ -148,68 +89,16 @@ const ContestDetail = () => {
             </p>
           </div>
           <div className="flex w-full justify-center mt-5">
-            <div onClick={() => setIsOpen(true)}>
-              <PrimaryBtn>Upload Submission</PrimaryBtn>
+            <div>
+              <Link
+                state={{ price: contest.contestPrice, contest: contest }}
+                to="/dashboard/payment"
+              >
+                {" "}
+                <PrimaryBtn>Pay to register</PrimaryBtn>
+              </Link>
             </div>
           </div>
-
-          {isOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-5 relative">
-                <button
-                  className="absolute right-2 top-2 text-2xl hover:scale-110 text-gray-500"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <IoMdCloseCircleOutline />
-                </button>
-                <h3 className="font-bold text-lg">Submit Your Entry</h3>
-                <p className="py-4">
-                  Follow the instructions to submit your entry.
-                </p>
-                <form onSubmit={handleTaskSubmit}>
-                  <input
-                    type="text"
-                    placeholder="Participant Name"
-                    className="input input-bordered w-full dark:bg-[#1D232A] bg-white text-gray-600 dark:text-gray-200"
-                    required
-                    name="participant_name"
-                    value={user?.displayName}
-                    readOnly
-                  />
-                  <p className="pt-1 ml-2 text-sm text-gray-500 dark:text-gray-200">
-                    You cannot change user name
-                  </p>
-                  <input
-                    type="text"
-                    placeholder="Participant Email"
-                    className="input input-bordered w-full mt-4 dark:bg-[#1D232A] bg-white text-gray-600 dark:text-gray-200"
-                    value={user?.email}
-                    name="participant_email"
-                    required
-                    readOnly
-                  />
-                  <p className="pt-1 ml-2 text-sm text-gray-500 dark:text-gray-200">
-                    You cannot change user email
-                  </p>
-
-                  <input
-                    type="url"
-                    name="task_link"
-                    placeholder="Enter submission link"
-                    className="input input-bordered w-full mt-4 dark:bg-[#1D232A] bg-white text-gray-600 dark:text-gray-200"
-                    required
-                  />
-                  <p className="pt-1 ml-2 text-sm text-gray-500 dark:text-gray-200 mb-4">
-                    Give the drive link of your task
-                  </p>
-                  <input
-                    type="submit"
-                    className="btn active:scale-95 btn-primary w-full"
-                  />
-                </form>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </>

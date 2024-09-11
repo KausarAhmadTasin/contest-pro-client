@@ -20,7 +20,6 @@ const SubmittedContests = () => {
   });
 
   const handleViewDetails = (contestTitle) => {
-    // Navigate to submission details with the contest ID as a query parameter
     navigate(`/dashboard/submissionDetails?contest_title=${contestTitle}`);
   };
 
@@ -30,7 +29,7 @@ const SubmittedContests = () => {
         <title>My Contests - ContestPro</title>
       </Helmet>
 
-      <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-200 mb-6">
+      <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-200 mb-4">
         My Contests
       </h1>
 
@@ -44,6 +43,9 @@ const SubmittedContests = () => {
                 </th>
                 <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
                   Prize
+                </th>
+                <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                  Transaction ID
                 </th>
               </tr>
             </thead>
@@ -68,6 +70,9 @@ const SubmittedContests = () => {
                   </td>
                   <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
                     {contest.contest_prize}
+                  </td>
+                  <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
+                    {contest.transaction_id}
                   </td>
                 </tr>
               ))}

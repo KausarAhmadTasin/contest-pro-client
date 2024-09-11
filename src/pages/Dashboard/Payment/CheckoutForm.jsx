@@ -12,11 +12,10 @@ const CheckoutForm = () => {
   const [clientSecret, setClientSecret] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [isConfirming, setIsConfirming] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // Control for the modal
+  const [isOpen, setIsOpen] = useState(false);
 
   const location = useLocation();
   const { price, contest } = location.state || {};
-  console.log(contest);
 
   const { user } = useContext(AuthContext);
 
@@ -94,7 +93,7 @@ const CheckoutForm = () => {
 
   const HandleRegistrationSubmitClick = async (e) => {
     e.preventDefault();
-    // Access form fields via e.target.elements
+
     const form = e.target;
     const taskLink = form.task_link.value;
 

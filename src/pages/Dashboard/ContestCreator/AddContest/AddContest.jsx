@@ -51,6 +51,9 @@ const AddContestForm = () => {
         taskSubmissionInstructions: form.contestDeadline.value,
         contestType: form.contestDeadline.value,
         contestDeadline: form.contestDeadline.value,
+        isPending: false,
+        participants_count: 0,
+        winner: false,
         creator: {
           name: user?.displayName,
           email: user?.email,

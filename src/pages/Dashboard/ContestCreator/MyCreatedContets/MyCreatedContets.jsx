@@ -92,11 +92,11 @@ const MyCreatedContests = () => {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {contests.map((contest) => (
               <div
                 key={contest._id}
-                className="border p-4 rounded-lg bg-white dark:bg-gray-800"
+                className="relative border p-4 rounded-lg bg-white dark:bg-gray-800"
               >
                 <img
                   src={contest.image}
@@ -123,6 +123,13 @@ const MyCreatedContests = () => {
                 >
                   Delete <IoMdCloseCircleOutline className="text-lg" />
                 </button>
+                <div
+                  className={`absolute right-2 top-2 rounded-3xl text-sm font-semibold  text-white px-4 py-1 ${
+                    contest.isPending ? "bg-orange-500" : "bg-green-400"
+                  }`}
+                >
+                  {contest.isPending ? "Pending" : "Approved"}
+                </div>
               </div>
             ))}
           </div>

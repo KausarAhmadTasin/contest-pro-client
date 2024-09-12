@@ -70,7 +70,7 @@ const Navbar = () => {
           <li
             className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
               location.pathname === "/"
-                ? "underline decoration-white decoration-2 outline-offset-4"
+                ? "underline decoration-white decoration-2 underline-offset-4"
                 : ""
             }`}
           >
@@ -81,7 +81,7 @@ const Navbar = () => {
           <li
             className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
               location.pathname === "/allContests"
-                ? "underline decoration-white decoration-2 outline-offset-4"
+                ? "underline decoration-white decoration-2 underline-offset-4"
                 : ""
             }`}
           >
@@ -92,7 +92,7 @@ const Navbar = () => {
           <li
             className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
               location.pathname === "/dashboard"
-                ? "underline decoration-white decoration-2 outline-offset-4"
+                ? "underline decoration-white decoration-2 underline-offset-4"
                 : ""
             }`}
           >
@@ -115,43 +115,53 @@ const Navbar = () => {
       <div className="hidden lg:block flex-gorw">{navLinksMain}</div>
       <div className="flex-none">
         {swap}
-        {user?.photoURL && (
+        {user ? (
           <>
-            <Popover className="relative z-50">
-              <PopoverButton className="flex mr-4 gap-x-2 items-center text-sm/6 font-semibold text-white/50 focus:outline-none data-[active]:text-white data-[hover]:text-white data-[focus]:outline-1 data-[focus]:outline-white">
-                <div className="relative">
-                  <img
-                    className="h-9 w-9 rounded-full"
-                    src={user.photoURL}
-                    alt=""
-                  />
-                  <div className="absolute -bottom-1 -right-1 z-10 bg-white rounded-full flex items-center justify-center">
-                    <IoIosArrowDown className=" text-blue-600 font-bold text-base" />
-                  </div>
-                </div>
-              </PopoverButton>
-              <PopoverPanel
-                anchor="bottom"
-                className="flex mt-3 bg-black/80 py-5 px-5 w-1/6 text-center flex-col divide-y divide-white/5 rounded-xl text-sm/6 transition duration-200 ease-in-out"
-              >
-                <p className="block rounded-lg py-2 px-3 transition font-semibold text-gray-100">
-                  {user && user?.displayName}
-                </p>
-                <Link to="/dashboard">
-                  <p className="block rounded-lg py-2 px-3 text-gray-200 my-2 transition hover:bg-white/5">
-                    Dashboard
-                  </p>
-                </Link>
+            {user?.photoURL && (
+              <>
+                <Popover className="relative z-50">
+                  <PopoverButton className="flex mr-4 gap-x-2 items-center text-sm/6 font-semibold text-white/50 focus:outline-none data-[active]:text-white data-[hover]:text-white data-[focus]:outline-1 data-[focus]:outline-white">
+                    <div className="relative">
+                      <img
+                        className="h-9 w-9 rounded-full"
+                        src={user.photoURL}
+                        alt=""
+                      />
+                      <div className="absolute -bottom-1 -right-1 z-10 bg-white rounded-full flex items-center justify-center">
+                        <IoIosArrowDown className=" text-blue-600 font-bold text-base" />
+                      </div>
+                    </div>
+                  </PopoverButton>
+                  <PopoverPanel
+                    anchor="bottom"
+                    className="flex mt-3 bg-black/80 py-5 px-5 w-1/6 text-center flex-col divide-y divide-white/5 rounded-xl text-sm/6 transition duration-200 ease-in-out"
+                  >
+                    <p className="block rounded-lg py-2 px-3 transition font-semibold text-gray-100">
+                      {user && user?.displayName}
+                    </p>
+                    <Link to="/dashboard">
+                      <p className="block rounded-lg py-2 px-3 text-gray-200 my-2 transition hover:bg-white/5">
+                        Dashboard
+                      </p>
+                    </Link>
 
-                <p
-                  onClick={handleLogOut}
-                  className="rounded-lg py-2 px-3 transition bg-gray-800 text-rose-500 btn hover:bg-white/5"
-                >
-                  Logout
-                </p>
-              </PopoverPanel>
-            </Popover>
+                    <p
+                      onClick={handleLogOut}
+                      className="rounded-lg py-2 px-3 transition bg-gray-800 text-rose-500 btn hover:bg-white/5"
+                    >
+                      Logout
+                    </p>
+                  </PopoverPanel>
+                </Popover>
+              </>
+            )}
           </>
+        ) : (
+          <Link to="/signIn">
+            <p className="mr-6 text-base font-semibold cursor-pointer hover:underline underline-offset-2">
+              Login
+            </p>
+          </Link>
         )}
       </div>
     </div>

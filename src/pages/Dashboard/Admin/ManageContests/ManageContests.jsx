@@ -22,6 +22,8 @@ const ManageContests = () => {
     },
   });
 
+  console.log(pendingContests);
+
   const handleApprove = async (contestId) => {
     try {
       await axiosSecure.patch(`/contests/approve/${contestId}`).then((res) => {
@@ -67,6 +69,12 @@ const ManageContests = () => {
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
                       Prize: {contest.prizeMoney}
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      Contest Creator:{" "}
+                      <span className="font-semibold">
+                        {contest.creator.name}
+                      </span>
                     </p>
                   </div>
                   <button

@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 const ContestDetail = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const currentDate = new Date();
 
   const {
     data: contest,
@@ -20,6 +21,11 @@ const ContestDetail = () => {
     },
     enabled: !!id,
   });
+  console.log(new Date(contest?.contestDeadline).toLocaleDateString());
+
+  const contestDeadline = new Date(contest?.contestDeadline);
+
+  const isDeadlineOver = currentDate.getTime() > contestDeadline.getTime();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -89,15 +95,20 @@ const ContestDetail = () => {
             </p>
           </div>
           <div className="flex w-full justify-center mt-5">
-            <div>
-              <Link
-                state={{ price: contest.contestPrice, contest: contest }}
-                to="/dashboard/payment"
-              >
-                {" "}
-                <PrimaryBtn>Pay to register</PrimaryBtn>
-              </Link>
-            </div>
+            {isDeadlineOver ? (
+              <p className="text-red-500 font-bold">
+                The deadline has passed, you can no longer register.
+              </p>
+            ) : (
+              <div className="flex w-full justify-center mt-5">
+                <Link
+                  state={{ price: contest.contestPrice, contest: contest }}
+                  to="/dashboard/payment"
+                >
+                  <PrimaryBtn>Pay to register</PrimaryBtn>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ const AllContests = () => {
   const { data: contests = [] } = useQuery({
     queryKey: ["contests"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/contests?isPending=true");
+      const res = await axiosPublic.get("/contests?isPending");
       return res.data;
     },
   });

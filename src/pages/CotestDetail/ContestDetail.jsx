@@ -21,7 +21,6 @@ const ContestDetail = () => {
     },
     enabled: !!id,
   });
-  console.log(new Date(contest?.contestDeadline).toLocaleDateString());
 
   const contestDeadline = new Date(contest?.contestDeadline);
 
@@ -54,28 +53,29 @@ const ContestDetail = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
             <div>
               <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <strong>Description: </strong>
+                <span className="font-bold">Description: </span>
                 {contest.contestDescription}
               </p>
               <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <strong>Prize Money: </strong>
+                <span className="font-bold">Prize Money: </span>
                 {contest.prizeMoney}
               </p>
               <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <strong>Contest Price: </strong>${contest.contestPrice}
+                <span className="font-bold">Contest Price: </span>$
+                {contest.contestPrice}
               </p>
             </div>
             <div>
               <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <strong>Type: </strong>
+                <span className="font-bold">Type: </span>
                 {contest.contestType}
               </p>
               <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <strong>Deadline: </strong>
+                <span className="font-bold">Deadline: </span>
                 {new Date(contest.contestDeadline).toLocaleDateString()}
               </p>
               <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <strong>Submission Instructions: </strong>
+                <span className="font-bold">Submission Instructions: </span>
                 {contest.taskSubmissionInstructions}
               </p>
             </div>
@@ -86,11 +86,11 @@ const ContestDetail = () => {
               Created By
             </h2>
             <p className="text-gray-700 dark:text-gray-400 text-lg">
-              <strong>Name: </strong>
+              <span className="font-bold">Name: </span>
               {contest.creator.name}
             </p>
             <p className="text-gray-700 dark:text-gray-400 text-lg">
-              <strong>Email: </strong>
+              <span className="font-bold">Email: </span>
               {contest.creator.email}
             </p>
           </div>

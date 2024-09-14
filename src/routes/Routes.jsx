@@ -18,6 +18,7 @@ import MyWinningContests from "../pages/Dashboard/User/MyWinnigContests/MyWinnin
 import Profile from "../pages/Dashboard/User/Profile/Profile";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import SignUp from "../pages/SignUp/SignUp";
+import AboutUs from "../pages/AboutUs/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/allContests",
         element: <AllContests />,
+      },
+      {
+        path: "/aboutUs",
+        element: <AboutUs />,
       },
       {
         path: "/contestDetails/:id",

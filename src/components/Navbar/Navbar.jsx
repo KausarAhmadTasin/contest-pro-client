@@ -4,8 +4,11 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { IoIosArrowDown } from "react-icons/io";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoCloseOutline } from "react-icons/io5";
 
 const Navbar = () => {
+  const [isDrawerOpen, setIsDrwerOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Read initial theme state from localStorage
     const savedTheme = localStorage.getItem("theme");
@@ -65,7 +68,7 @@ const Navbar = () => {
 
   const navLinksMain = (
     <>
-      <ul className="flex">
+      <ul className="flex md:flex-row flex-col">
         <Link to="/">
           <li
             className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
@@ -108,11 +111,25 @@ const Navbar = () => {
       className={`navbar fixed z-40 flex justify-between bg-[#0c243b] text-white w-full transition-transform duration-300`}
     >
       <div className="">
+        <div
+          className="md:hidden text-lg ml-2"
+          onClick={() => setIsDrwerOpen(!isDrawerOpen)}
+        >
+          {" "}
+          {isDrawerOpen ? <IoCloseOutline /> : <RxHamburgerMenu />}
+        </div>
         <Link to="/">
           <p className="btn btn-ghost text-xl">ContestPro</p>
         </Link>
       </div>
       <div className="hidden lg:block flex-gorw">{navLinksMain}</div>
+      <div
+        className={`absolute md:hidden duration-200 py-4 px-5 opacity-90 top-16 bg-[#102d49] flex-gorw ${
+          isDrawerOpen ? "left-1 " : "-left-40"
+        }`}
+      >
+        {navLinksMain}
+      </div>
       <div className="flex-none">
         {swap}
         {user ? (

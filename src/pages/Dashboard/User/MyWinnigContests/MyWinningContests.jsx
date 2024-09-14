@@ -20,7 +20,7 @@ const MyWinningContests = () => {
       );
       return res.data;
     },
-    enabled: !!user.email, // Only run the query if the user email exists
+    enabled: !!user.email,
   });
 
   if (isLoading) {

@@ -28,7 +28,7 @@ const TopContests = () => {
   return (
     <>
       {" "}
-      <div className="container mx-auto mt-20">
+      <div className="md:container md:mx-auto mx-6 mt-20">
         <h2 className="text-3xl font-bold mb-10 text-center ">Top Contests</h2>
 
         {/* Tab System */}

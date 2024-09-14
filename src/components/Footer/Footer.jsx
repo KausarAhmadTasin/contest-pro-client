@@ -3,9 +3,9 @@ import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#002b5c] text-white py-8">
-      <div className="md:container md:mx-auto px-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-28">
+    <footer className="bg-[#21354d] text-white py-8">
+      <div className="md:container md:mx-auto md:px-10 px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:gap-28 gap-10">
           {/* About section */}
           <div>
             <h3 className="text-lg font-bold mb-4">About ContestPro</h3>

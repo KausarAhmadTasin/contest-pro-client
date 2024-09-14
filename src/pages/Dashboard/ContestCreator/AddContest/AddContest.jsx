@@ -91,10 +91,10 @@ const AddContestForm = () => {
       <Helmet>
         <title>Add Contests - ContestPro</title>
       </Helmet>
-      <div className="container mx-auto py-5 w-full ">
+      <div className="md:container mx-1 md:mx-auto py-5 w-full">
         <form
           onSubmit={handleSubmit}
-          className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg"
+          className="md:max-w-2xl md:mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg"
         >
           <h2 className="text-2xl font-semibold mb-4 text-center text-gray-500 dark:text-gray-200">
             Add Contest

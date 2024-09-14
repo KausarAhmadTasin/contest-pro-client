@@ -151,7 +151,7 @@ const Navbar = () => {
                   </PopoverButton>
                   <PopoverPanel
                     anchor="bottom"
-                    className="flex mt-3 bg-black/80 py-5 px-5 w-1/6 text-center flex-col divide-y divide-white/5 rounded-xl text-sm/6 transition duration-200 ease-in-out"
+                    className="flex mt-3 bg-black/80 py-5 px-5 md:w-1/6 w-1/2 text-center flex-col divide-y divide-white/5 rounded-xl text-sm/6 transition duration-200 ease-in-out"
                   >
                     <p className="block rounded-lg py-2 px-3 transition font-semibold text-gray-100">
                       {user && user?.displayName}

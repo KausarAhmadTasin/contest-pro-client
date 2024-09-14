@@ -6,12 +6,14 @@ import { GiStairsGoal } from "react-icons/gi";
 import { VscFileSubmodule } from "react-icons/vsc";
 import { FaUsers } from "react-icons/fa";
 import { MdManageAccounts } from "react-icons/md";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { BsArrowRightSquareFill } from "react-icons/bs";
 
 const Dashboard = () => {
+  const [isDashboarOpen, setIsDashboardOpen] = useState(false);
   const { user } = useContext(AuthContext);
 
   const axiosSecure = useAxiosSecure();
@@ -91,18 +93,46 @@ const Dashboard = () => {
     <>
       <Navbar />
       <div className="flex w-full gap-x-5 pt-16 min-h-screen bg-[#f5f5f5] dark:bg-[#2f2f30] text-[#333333)]">
-        <div className="w-1/5 min-h-full bg-[#6380a3] text-white">
-          <ul className="menu text-base">
-            {role === "creator" && creatorLinks}
-            {role === "admin" && (
-              <>
-                {creatorLinks}
-                {adminLinks}
-              </>
-            )}
-            {role === "user" && userLinks}
-          </ul>
-        </div>
+        <BsArrowRightSquareFill
+          onClick={() => setIsDashboardOpen(!isDashboarOpen)}
+          className={`md:hidden absolute  top-20 text-4xl dark:text-[#2f567a] text-[#0C243B] duration-200 ${
+            isDashboarOpen ? "rotate-180 z-30 right-0" : "left-0"
+          }`}
+        />
+        {isDashboarOpen ? (
+          <div
+            className={`md:w-1/5 w-full md:fixed absolute md:min-h-full bg-[#6380a3] text-white duration-300 ${
+              isDashboarOpen ? "left-1" : "md:left-0 -left-[30rem]"
+            }`}
+          >
+            <ul className="menu text-base">
+              {role === "creator" && creatorLinks}
+              {role === "admin" && (
+                <>
+                  {creatorLinks}
+                  {adminLinks}
+                </>
+              )}
+              {role === "user" && userLinks}
+            </ul>
+          </div>
+        ) : (
+          <div
+            className={`md:w-1/5 w-full md:block hidden md:min-h-full bg-[#6380a3] text-white duration-200
+            }`}
+          >
+            <ul className="menu text-base">
+              {role === "creator" && creatorLinks}
+              {role === "admin" && (
+                <>
+                  {creatorLinks}
+                  {adminLinks}
+                </>
+              )}
+              {role === "user" && userLinks}
+            </ul>
+          </div>
+        )}
         <div className="flex-1">
           <Outlet></Outlet>
         </div>

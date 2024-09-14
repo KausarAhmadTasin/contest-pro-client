@@ -9,6 +9,8 @@ const Profile = () => {
   const { user } = useContext(AuthContext);
   const [winningPercentage, setWinningPercentage] = useState(null);
   const axiosSecure = useAxiosSecure();
+  const [participatedCount, setParticipatedCount] = useState(null);
+  const [winningCount, setWinningCount] = useState(null);
 
   const { data: userInfo = [] } = useQuery({
     queryKey: ["userInfo"],
@@ -26,14 +28,15 @@ const Profile = () => {
         const totalContestsRes = await axiosSecure.get(
           `/participants?participant=${user.email}`
         );
-        const totalContests = totalContestsRes.data.length;
+        setParticipatedCount(totalContestsRes.data.length);
 
         const winningContestsRes = await axiosSecure.get(
           `/participants?participant=${user.email}&winner=true`
         );
-        const wins = winningContestsRes.data.length;
+        setWinningCount(winningContestsRes.data.length);
 
-        const percentage = totalContests > 0 ? (wins / totalContests) * 100 : 0;
+        const percentage =
+          participatedCount > 0 ? (winningCount / participatedCount) * 100 : 0;
 
         setWinningPercentage(percentage.toFixed(2));
       } catch (error) {
@@ -42,13 +45,17 @@ const Profile = () => {
     };
 
     fetchContestStats();
-  }, [user.email, axiosSecure]);
+  }, [user.email, axiosSecure, participatedCount, winningCount]);
 
   return (
     <div className="min-h-screen">
-      <h1 className="text-2xl font-bold text-center mt-1 mb-4 text-gray-600 dark:text-gray-200">
+      <h1 className="text-2xl font-bold text-center mt-2 mb-4 text-gray-600 dark:text-gray-200">
         Profile
       </h1>
+      <h2 className="mt-3 mb-6 text-center">
+        {userInfo?.name} you have participated in {participatedCount} contests
+        and you have won in {winningCount} contests.
+      </h2>
       <div className="w-3/4 flex md:flex-row flex-col justify-between items-center mx-auto bg-gray-200 dark:bg-gray-700 p-10 px-20 rounded-2xl">
         <div className="flex flex-col items-center">
           <img className="h-28 w-28 rounded-full" src={user?.photoURL} alt="" />

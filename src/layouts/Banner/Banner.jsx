@@ -1,7 +1,17 @@
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Banner = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (searchTerm) {
+      // Navigate to a route where search results are displayed with the query
+      navigate(`/allContests?contestType=${searchTerm}`);
+    }
+  };
 
   return (
     <section
@@ -24,15 +34,20 @@ const Banner = () => {
         <div className="flex justify-center pt-5 items-center">
           <input
             type="text"
-            placeholder="Search contests by tags..."
-            className="w-full max-w-lg px-4 py-2 rounded-s-md focus:outline-none bg-white dark:bg-slate-700 text-gray-600 dark:text-gray-200 focus:ring focus:ring-white"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search contests by type..."
+            className="w-full max-w-lg px-4 py-2 rounded-s-md focus:outline-none bg-white dark:bg-slate-700 text-gray-600 dark:text-gray-200 focus:ring"
           />
-          <button className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-e-md">
+          <button
+            onClick={handleSearch}
+            className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-e-md"
+          >
             Search
           </button>
         </div>
 
-        {/*  links  */}
+        {/* Links */}
         <nav className="mt-6">
           <ul className="flex justify-center gap-4">
             <li

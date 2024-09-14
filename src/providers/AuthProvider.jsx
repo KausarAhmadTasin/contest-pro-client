@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import "react-toastify/dist/ReactToastify.css";
 import auth from "../firebase/config.firebase";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 
@@ -21,6 +22,7 @@ const AuthProvider = ({ children }) => {
 
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
+  const axiosPublic = useAxiosPublic();
 
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -48,12 +50,6 @@ const AuthProvider = ({ children }) => {
   const googleLogin = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
-    // .then((result) => {
-    //   setUser(result.user);
-    // })
-    // .finally(() => {
-    //   setLoading(false);
-    // });
   };
 
   const githubLogin = () => {
@@ -69,35 +65,25 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // const userEmail = currentUser?.email || user?.email;
-      // const loggedUser = { email: userEmail };
       setUser(currentUser);
+      if (currentUser) {
+        const userInfo = { email: currentUser.email };
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+          }
+        });
+      } else {
+        localStorage.removeItem("access-token");
+      }
 
       setLoading(false);
-
-      // if (currentUser) {
-      //   axios
-      //     .post(`https://dream-jobs-server-nine.vercel.app/jwt`, loggedUser, {
-      //       withCredentials: true,
-      //     })
-      //     .then((res) => {
-      //       console.log(res.data);
-      //     });
-      // } else {
-      //   axios.post(
-      //     `https://dream-jobs-server-nine.vercel.app/logout`,
-      //     loggedUser,
-      //     {
-      //       withCredentials: true,
-      //     }
-      //   );
-      // }
     });
 
     return () => {
       unsubscribe();
     };
-  }, [user?.email]);
+  }, [user?.email, axiosPublic]);
 
   const authInfo = {
     user,

@@ -8,6 +8,8 @@ import { Helmet } from "react-helmet";
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
 
+  console.log(typeof localStorage.getItem("access-token"));
+
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {

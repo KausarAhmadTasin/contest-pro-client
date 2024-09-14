@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/Home/Home";
-import SignUp from "../pages/Home/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
 import AddContest from "../pages/Dashboard/ContestCreator/AddContest/AddContest";
 import Dashboard from "../pages/Dashboard/Dashboard";
@@ -18,6 +17,7 @@ import MyParticipatedContests from "../pages/Dashboard/User/MyParticipatedContes
 import MyWinningContests from "../pages/Dashboard/User/MyWinnigContests/MyWinningContests";
 import Profile from "../pages/Dashboard/User/Profile/Profile";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import SignUp from "../pages/SignUp/SignUp";
 
 const router = createBrowserRouter([
   {

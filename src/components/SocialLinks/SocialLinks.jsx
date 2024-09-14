@@ -18,7 +18,6 @@ const SocialLinks = () => {
           name: res.user?.displayName,
           role: "user",
         };
-        console.log(userInfo);
         await axiosPublic.post("/users", userInfo).then(() => {
           toast.success("Signed in!");
           navigate("/");

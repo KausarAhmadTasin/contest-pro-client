@@ -9,17 +9,17 @@ import { MdManageAccounts } from "react-icons/md";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
 
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const { data: { role } = "user" } = useQuery({
     queryKey: ["userRole"],
     queryFn: async () => {
-      const res = await axiosPublic(`/users?email=${user.email}`);
+      const res = await axiosSecure.get(`/users/role/${user.email}`);
       return res.data;
     },
   });

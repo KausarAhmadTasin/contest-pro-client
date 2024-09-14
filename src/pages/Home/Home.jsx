@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import Banner from "../../layouts/Banner/Banner";
+import TopContests from "../../components/TopContests/TopContests";
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
         <meta name="description" content="Helmet application" />
       </Helmet>
       <Banner />
+      <TopContests />
     </div>
   );
 };

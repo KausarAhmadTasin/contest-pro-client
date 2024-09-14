@@ -1,19 +1,31 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import PrimaryBtn from "../../components/PrimaryBtn/PrimaryBtn";
+import { useState, useEffect } from "react";
 
 const AllContests = () => {
   const axiosPublic = useAxiosPublic();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [contestType, setContestType] = useState(
+    searchParams.get("contestType") || ""
+  );
 
-  const { data: contests = [] } = useQuery({
-    queryKey: ["contests"],
+  // Fetch contests based on contest type
+  const { data: contests = [], refetch } = useQuery({
+    queryKey: ["contests", contestType],
     queryFn: async () => {
-      const res = await axiosPublic.get("/contests?isPending");
+      const res = await axiosPublic.get(`/contests?contestType=${contestType}`);
       return res.data;
     },
   });
+
+  // Update the search params when the contestType changes
+  useEffect(() => {
+    setSearchParams({ contestType });
+    refetch(); // Refetch contests when the type changes
+  }, [contestType, setSearchParams, refetch]);
 
   return (
     <>
@@ -22,6 +34,27 @@ const AllContests = () => {
       </Helmet>
       <div className="min-h-screen p-6 dark:bg-[#2f2f30]">
         <h1 className="text-2xl font-bold mb-4">All Contests</h1>
+
+        {/* Contest Type Filter */}
+        <div className="mb-6">
+          <label htmlFor="contestType" className="text-lg font-semibold">
+            Filter by Contest Type:
+          </label>
+          <select
+            id="contestType"
+            value={contestType}
+            onChange={(e) => setContestType(e.target.value)}
+            className="ml-4 p-2 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-300"
+          >
+            <option value="">All</option>
+            <option value="Book Review">Book Review</option>
+            <option value="Movie Review">Movie Review</option>
+            <option value="Article Writing">Article Writing</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+
+        {/* Contests Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {contests.map((contest, index) => (
             <div
@@ -57,7 +90,6 @@ const AllContests = () => {
               </p>
               <div className="flex justify-center w-full mt-4">
                 <Link to={`/contestDetails/${contest._id}`}>
-                  {" "}
                   <PrimaryBtn>Details</PrimaryBtn>
                 </Link>
               </div>

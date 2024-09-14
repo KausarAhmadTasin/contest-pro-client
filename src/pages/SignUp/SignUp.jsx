@@ -2,10 +2,10 @@ import { useContext, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { AuthContext } from "../../../providers/AuthProvider";
-import SocialLinks from "../../../components/SocialLinks/SocialLinks";
+import { AuthContext } from "../../providers/AuthProvider";
+import SocialLinks from "../../components/SocialLinks/SocialLinks";
 import Swal from "sweetalert2";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { toast } from "react-toastify";
 
 const SignUp = () => {

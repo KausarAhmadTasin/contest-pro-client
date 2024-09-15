@@ -23,7 +23,12 @@ const MyParticipatedContests = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex min-h-screen justify-center items-center">
+        {" "}
+        <span className="loading  loading-dots loading-lg"></span>
+      </div>
+    );
   }
 
   if (isError) {

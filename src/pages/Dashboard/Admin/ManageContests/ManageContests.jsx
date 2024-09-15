@@ -6,7 +6,11 @@ import { toast } from "react-toastify";
 const ManageContests = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: pendingContests = [], refetch } = useQuery({
+  const {
+    data: pendingContests = [],
+    isLoading: isLoadingPending,
+    refetch,
+  } = useQuery({
     queryKey: ["contests", "pending"],
     queryFn: async () => {
       const res = await axiosSecure.get("/contests?isPending=true");
@@ -14,7 +18,11 @@ const ManageContests = () => {
     },
   });
 
-  const { data: approvedContests = [], refetch: refechApproved } = useQuery({
+  const {
+    data: approvedContests = [],
+    isLoading: isLoadingApproved,
+    refetch: refetchApproved,
+  } = useQuery({
     queryKey: ["contests", "approved"],
     queryFn: async () => {
       const res = await axiosSecure.get("/contests?isPending=false");
@@ -22,15 +30,13 @@ const ManageContests = () => {
     },
   });
 
-  console.log(pendingContests);
-
   const handleApprove = async (contestId) => {
     try {
       await axiosSecure.patch(`/contests/approve/${contestId}`).then((res) => {
         if (res.data) {
           toast.success(res.data.message);
           refetch();
-          refechApproved();
+          refetchApproved();
         }
       });
     } catch (error) {
@@ -56,7 +62,11 @@ const ManageContests = () => {
             Pending Contests
           </h2>
 
-          {pendingContests.length > 0 ? (
+          {isLoadingPending ? (
+            <p className="text-center text-gray-500">
+              <span className="loading loading-dots loading-lg"></span>
+            </p>
+          ) : pendingContests.length > 0 ? (
             <div className="space-y-4">
               {pendingContests.map((contest) => (
                 <div
@@ -97,7 +107,11 @@ const ManageContests = () => {
             Approved Contests
           </h2>
 
-          {approvedContests.length > 0 ? (
+          {isLoadingApproved ? (
+            <p className="text-center text-gray-500">
+              <span className="loading loading-dots loading-lg"></span>
+            </p>
+          ) : approvedContests.length > 0 ? (
             <div className="space-y-4">
               {approvedContests.map((contest) => (
                 <div

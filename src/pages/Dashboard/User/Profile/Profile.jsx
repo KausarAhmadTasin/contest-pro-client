@@ -47,7 +47,7 @@ const Profile = () => {
   }, [user.email, axiosSecure, participatedCount, winningCount]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen text-gray-600 dark:text-gray-200">
       <h1 className="text-2xl font-bold text-center mt-2 mb-4 text-gray-600 dark:text-gray-200">
         Profile
       </h1>
@@ -60,7 +60,7 @@ const Profile = () => {
           <img className="h-28 w-28 rounded-full" src={user?.photoURL} alt="" />
           <h1 className="font-semibold text-xl mt-5">
             <span className="font-normal">Name: </span>
-            {userInfo.name}
+            {userInfo?.name}
           </h1>
         </div>
         {/* Winning Stats */}

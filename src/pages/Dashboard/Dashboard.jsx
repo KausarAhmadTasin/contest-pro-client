@@ -96,12 +96,12 @@ const Dashboard = () => {
         <BsArrowRightSquareFill
           onClick={() => setIsDashboardOpen(!isDashboarOpen)}
           className={`md:hidden absolute  top-20 text-4xl dark:text-[#2f567a] text-[#0C243B] duration-200 ${
-            isDashboarOpen ? "rotate-180 z-30 right-0" : "left-0"
+            isDashboarOpen ? "rotate-180 z-50 right-0" : "left-0"
           }`}
         />
         {isDashboarOpen ? (
           <div
-            className={`md:w-1/5 w-full md:fixed absolute md:min-h-full bg-[#6380a3] text-white duration-300 ${
+            className={`md:w-1/5 w-full z-30 md:fixed absolute md:min-h-full bg-[#6380a3] text-white duration-300 ${
               isDashboarOpen ? "left-1" : "md:left-0 -left-[30rem]"
             }`}
           >

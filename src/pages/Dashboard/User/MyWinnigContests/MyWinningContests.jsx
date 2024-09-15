@@ -24,7 +24,12 @@ const MyWinningContests = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex min-h-screen justify-center items-center">
+        {" "}
+        <span className="loading  loading-dots loading-lg"></span>
+      </div>
+    );
   }
 
   if (isError) {
@@ -32,7 +37,11 @@ const MyWinningContests = () => {
   }
 
   if (winningContests.length === 0) {
-    return <div>No winning contests found.</div>;
+    return (
+      <div className=" text-gray-600 text-center mt-10 dark:text-gray-200">
+        <p>No winning contests found.</p>
+      </div>
+    );
   }
 
   return (

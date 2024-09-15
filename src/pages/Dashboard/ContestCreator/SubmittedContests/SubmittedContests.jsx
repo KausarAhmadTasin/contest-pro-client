@@ -11,7 +11,7 @@ const SubmittedContests = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { data: contests = [] } = useQuery({
+  const { data: contests = [], isLoading } = useQuery({
     queryKey: ["contests"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/participants?creator=${user?.email}`);
@@ -33,57 +33,63 @@ const SubmittedContests = () => {
         Submitted Contests
       </h1>
 
-      <div className="overflow-x-auto">
-        {contests.length > 0 ? (
-          <table className="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
-            <thead>
-              <tr>
-                <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
-                  Contest Name
-                </th>
-                <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
-                  Prize
-                </th>
-                <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
-                  Transaction ID
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {contests.map((contest, index) => (
-                <tr key={index} className="border-t">
-                  <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
-                    <div
-                      onClick={() => {
-                        handleViewDetails(contest._id);
-                      }}
-                      className="flex items-center cursor-pointer"
-                    >
-                      <p className="hover:underline flex-grow text-base font-semibold underline-offset-3">
-                        {contest.contest_title}
-                      </p>
-                      <p className="flex hover:-translate-y-1 text-sky-500 duration-200 items-center justify-between cursor-pointer gap-x-1">
-                        View Submission Details{" "}
-                        <MdArrowOutward className="mb-1" />
-                      </p>
-                    </div>
-                  </td>
-                  <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
-                    {contest.contest_prize}
-                  </td>
-                  <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
-                    {contest.transaction_id}
-                  </td>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-60">
+          <span className="loading loading-dots loading-lg"></span>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          {contests.length > 0 ? (
+            <table className="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+              <thead>
+                <tr>
+                  <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                    Contest Name
+                  </th>
+                  <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                    Prize
+                  </th>
+                  <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                    Transaction ID
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p className="text-center my-10 text-gray-500">
-            You don&apos;t have any submitted contests!
-          </p>
-        )}
-      </div>
+              </thead>
+              <tbody>
+                {contests.map((contest, index) => (
+                  <tr key={index} className="border-t">
+                    <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
+                      <div
+                        onClick={() => {
+                          handleViewDetails(contest._id);
+                        }}
+                        className="flex items-center cursor-pointer"
+                      >
+                        <p className="hover:underline flex-grow text-base font-semibold underline-offset-3">
+                          {contest.contest_title}
+                        </p>
+                        <p className="flex hover:-translate-y-1 text-sky-500 duration-200 items-center justify-between cursor-pointer gap-x-1">
+                          View Submission Details{" "}
+                          <MdArrowOutward className="mb-1" />
+                        </p>
+                      </div>
+                    </td>
+                    <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
+                      {contest.contest_prize}
+                    </td>
+                    <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
+                      {contest.transaction_id}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-center my-10 text-gray-500">
+              You don&apos;t have any submitted contests!
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 };

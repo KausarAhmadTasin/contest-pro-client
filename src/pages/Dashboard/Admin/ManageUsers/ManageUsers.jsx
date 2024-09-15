@@ -8,7 +8,12 @@ import { Helmet } from "react-helmet";
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: users = [], refetch } = useQuery({
+  const {
+    data: users = [],
+    refetch,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -66,59 +71,68 @@ const ManageUsers = () => {
           Manage Users
         </h1>
 
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
-            <thead>
-              <tr>
-                <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
-                  User
-                </th>
-                <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
-                  Email
-                </th>
-                <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
-                  Role
-                </th>
-                <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
-                  Delete
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id} className="border-t">
-                  <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
-                    {user.name}
-                  </td>
-                  <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
-                    {user.email}
-                  </td>
-                  <td className="py-4 px-6 text-sm">
-                    <select
-                      className="bg-gray-200 dark:bg-gray-700 border-none outline-none text-gray-800 dark:text-gray-300 p-2 rounded-md"
-                      value={user.role}
-                      onChange={(e) =>
-                        handleRoleChange(user._id, e.target.value)
-                      }
-                    >
-                      <option value="admin">Admin</option>
-                      <option value="creator">Creator</option>
-                      <option value="user">User</option>
-                    </select>
-                  </td>
-                  <td className="py-4 px-6 text-sm">
-                    <button
-                      onClick={() => handleDeleteUser(user._id)}
-                      className="btn mt-2 border-none hover:bg-red-400 bg-red-500 text-white"
-                    >
-                      Delete <IoMdCloseCircleOutline className="text-lg" />
-                    </button>
-                  </td>
+        {/* Loading and Error State */}
+        {isLoading ? (
+          <p className="text-center text-gray-500">
+            <span className="loading loading-dots loading-lg"></span>
+          </p>
+        ) : isError ? (
+          <p className="text-center text-red-500">Error loading users</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+              <thead>
+                <tr>
+                  <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                    User
+                  </th>
+                  <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                    Role
+                  </th>
+                  <th className="py-3 px-6 bg-gray-300 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                    Delete
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id} className="border-t">
+                    <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
+                      {user.name}
+                    </td>
+                    <td className="py-4 px-6 text-sm text-gray-700 dark:text-gray-300">
+                      {user.email}
+                    </td>
+                    <td className="py-4 px-6 text-sm">
+                      <select
+                        className="bg-gray-200 dark:bg-gray-700 border-none outline-none text-gray-800 dark:text-gray-300 p-2 rounded-md"
+                        value={user.role}
+                        onChange={(e) =>
+                          handleRoleChange(user._id, e.target.value)
+                        }
+                      >
+                        <option value="admin">Admin</option>
+                        <option value="creator">Creator</option>
+                        <option value="user">User</option>
+                      </select>
+                    </td>
+                    <td className="py-4 px-6 text-sm">
+                      <button
+                        onClick={() => handleDeleteUser(user._id)}
+                        className="btn mt-2 border-none hover:bg-red-400 bg-red-500 text-white"
+                      >
+                        Delete <IoMdCloseCircleOutline className="text-lg" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </>
   );

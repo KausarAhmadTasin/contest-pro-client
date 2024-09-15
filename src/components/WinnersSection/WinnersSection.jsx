@@ -39,7 +39,9 @@ const WinnerSection = () => {
       </div>
 
       {isLoading ? (
-        <p className="text-center">Loading...</p>
+        <div className="flex w-full justify-center items-center">
+          <span className="loading  loading-dots loading-lg"></span>
+        </div>
       ) : (
         <div className="grid justify-center items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {winnerStats.winners.map((winner, index) => (

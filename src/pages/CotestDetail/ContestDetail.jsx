@@ -27,11 +27,19 @@ const ContestDetail = () => {
   const isDeadlineOver = currentDate.getTime() > contestDeadline.getTime();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen text-gray-600 dark:text-gray-200">
+        Loading...
+      </div>
+    );
   }
 
   if (isError) {
-    return <div>Error loading contest details.</div>;
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        Error loading contest details.
+      </div>
+    );
   }
 
   return (
@@ -40,75 +48,80 @@ const ContestDetail = () => {
         <title>Contest Details - ContestPro</title>
       </Helmet>
       <div className="container mx-auto px-4 py-8 pt-20">
-        <div className="max-w-4xl mx-auto">
-          <img
-            src={contest.image}
-            alt={contest.contestName}
-            className="w-full h-64 object-cover rounded-lg mb-6"
-          />
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-            {contest.contestName}
-          </h1>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-            <div>
-              <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <span className="font-bold">Description: </span>
-                {contest.contestDescription}
-              </p>
-              <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <span className="font-bold">Prize Money: </span>
-                {contest.prizeMoney}
-              </p>
-              <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <span className="font-bold">Contest Price: </span>$
-                {contest.contestPrice}
-              </p>
-            </div>
-            <div>
-              <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <span className="font-bold">Type: </span>
-                {contest.contestType}
-              </p>
-              <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <span className="font-bold">Deadline: </span>
-                {new Date(contest.contestDeadline).toLocaleDateString()}
-              </p>
-              <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <span className="font-bold">Submission Instructions: </span>
-                {contest.taskSubmissionInstructions}
-              </p>
+        <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
+          <div className="relative">
+            <img
+              src={contest.image}
+              alt={contest.contestName}
+              className="w-full h-72 object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <h1 className="text-4xl font-bold text-white px-4 text-center">
+                {contest.contestName}
+              </h1>
             </div>
           </div>
 
-          <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
-            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-              Created By
-            </h2>
-            <p className="text-gray-700 dark:text-gray-400 text-lg">
-              <span className="font-bold">Name: </span>
-              {contest.creator.name}
-            </p>
-            <p className="text-gray-700 dark:text-gray-400 text-lg">
-              <span className="font-bold">Email: </span>
-              {contest.creator.email}
-            </p>
-          </div>
-          <div className="flex w-full justify-center mt-5">
-            {isDeadlineOver ? (
-              <p className="text-red-500 font-bold">
-                The deadline has passed, you can no longer register.
+          <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-bold">Description: </span>
+                  {contest.contestDescription}
+                </p>
+                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-bold">Prize Money: </span>
+                  {contest.prizeMoney}
+                </p>
+                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-bold">Contest Price: </span>$
+                  {contest.contestPrice}
+                </p>
+              </div>
+              <div>
+                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-bold">Type: </span>
+                  {contest.contestType}
+                </p>
+                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-bold">Deadline: </span>
+                  {new Date(contest.contestDeadline).toLocaleDateString()}
+                </p>
+                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-bold">Submission Instructions: </span>
+                  {contest.taskSubmissionInstructions}
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+                Created By
+              </h2>
+              <p className="text-gray-700 dark:text-gray-400 text-lg">
+                <span className="font-bold">Name: </span>
+                {contest.creator.name}
               </p>
-            ) : (
-              <div className="flex w-full justify-center mt-5">
+              <p className="text-gray-700 dark:text-gray-400 text-lg">
+                <span className="font-bold">Email: </span>
+                {contest.creator.email}
+              </p>
+            </div>
+
+            <div className="flex w-full justify-center mt-8">
+              {isDeadlineOver ? (
+                <p className="text-red-500 font-bold text-xl">
+                  The deadline has passed, you can no longer register.
+                </p>
+              ) : (
                 <Link
                   state={{ price: contest.contestPrice, contest: contest }}
                   to="/dashboard/payment"
                 >
-                  <PrimaryBtn>Pay to register</PrimaryBtn>
+                  <PrimaryBtn>Pay to Register</PrimaryBtn>
                 </Link>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>

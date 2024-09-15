@@ -26,11 +26,11 @@ const SubmittedContests = () => {
   return (
     <div className="container mx-auto px-4 py-8 pt-6">
       <Helmet>
-        <title>My Contests - ContestPro</title>
+        <title>Submitted Contests - ContestPro</title>
       </Helmet>
 
       <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-200 mb-4">
-        My Contests
+        Submitted Contests
       </h1>
 
       <div className="overflow-x-auto">

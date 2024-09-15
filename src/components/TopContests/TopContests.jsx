@@ -29,7 +29,9 @@ const TopContests = () => {
     <>
       {" "}
       <div className="md:container md:mx-auto mx-6 mt-10 md:mt-20">
-        <h2 className="text-3xl font-bold mb-10 text-center ">Top Contests</h2>
+        <h2 className="text-3xl text-gray-600 dark:text-gray-200 font-bold mb-10 text-center ">
+          Top Contests
+        </h2>
 
         {/* Tab System */}
         <div className="flex justify-center space-x-4 mb-6">

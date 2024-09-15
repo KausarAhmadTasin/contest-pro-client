@@ -29,7 +29,7 @@ const Dashboard = () => {
   const creatorLinks = (
     <>
       <li className="mt-2">
-        <NavLink to="/dashboard" end>
+        <NavLink to="/dashboard/myCreatedContests" end>
           <GiStairsGoal className="text-lg" />
           My Created Contests
         </NavLink>
@@ -118,7 +118,7 @@ const Dashboard = () => {
           </div>
         ) : (
           <div
-            className={`md:w-1/5 w-full md:block hidden md:min-h-full bg-[#6380a3] text-white duration-200
+            className={`md:w-1/5 w-full z-40 md:block hidden md:min-h-full bg-[#6380a3] text-white duration-200
             }`}
           >
             <ul className="menu text-base">

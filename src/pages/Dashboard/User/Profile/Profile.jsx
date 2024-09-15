@@ -15,11 +15,10 @@ const Profile = () => {
   const { data: userInfo = [] } = useQuery({
     queryKey: ["userInfo"],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `http://localhost:5000/users?profile=abc@c.com`
-      );
+      const res = await axiosSecure.get(`/users/role/${user?.email}`);
       return res.data;
     },
+    enabled: !!user?.email,
   });
 
   useEffect(() => {

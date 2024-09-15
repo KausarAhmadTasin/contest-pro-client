@@ -43,15 +43,15 @@ const AddContestForm = () => {
 
     if (res.data.success) {
       const contest = {
-        contestName: form.contestDeadline.value,
+        contestName: form.contestName.value,
         image: res.data.data.display_url,
-        contestDescription: form.contestDeadline.value,
-        contestPrice: form.contestDeadline.value,
-        prizeMoney: form.contestDeadline.value,
-        taskSubmissionInstructions: form.contestDeadline.value,
-        contestType: form.contestDeadline.value,
+        contestDescription: form.contestDescription.value,
+        contestPrice: form.contestPrice.value,
+        prizeMoney: form.prizeMoney.value,
+        taskSubmissionInstructions: form.taskSubmissionInstructions.value,
+        contestType: form.contestType.value,
         contestDeadline: form.contestDeadline.value,
-        isPending: false,
+        isPending: true,
         participants_count: 0,
         winner: false,
         creator: {

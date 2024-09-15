@@ -10,7 +10,6 @@ import SubmittedContests from "../pages/Dashboard/ContestCreator/SubmittedContes
 import AllContests from "../pages/AllContests/AllContests";
 import PrivateRoutes from "./PrivateRoutes";
 import ContestDetail from "../pages/CotestDetail/ContestDetail";
-import SubmissionDetails from "../pages/Dashboard/ContestCreator/SubmissonDetails/SubmissionDetails";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import ManageContests from "../pages/Dashboard/Admin/ManageContests/ManageContests";
 import MyParticipatedContests from "../pages/Dashboard/User/MyParticipatedContests/MyParticipatedContests";
@@ -19,6 +18,10 @@ import Profile from "../pages/Dashboard/User/Profile/Profile";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import SignUp from "../pages/SignUp/SignUp";
 import AboutUs from "../pages/AboutUs/AboutUs";
+import AdminRoutes from "./AdminRoutes";
+import CreatorRoutes from "./CreatorRoutes";
+import SubmissionDetails from "../pages/Dashboard/ContestCreator/SubmissonDetails/SubmissionDetails";
+import DashboardContent from "../components/DashboardContent/DashboardContent";
 
 const router = createBrowserRouter([
   {
@@ -66,15 +69,35 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/addContest",
-        element: <AddContest />,
+        element: (
+          <CreatorRoutes>
+            <AddContest />
+          </CreatorRoutes>
+        ),
       },
       {
         path: "/dashboard",
-        element: <MyCreatedContets />,
+        element: (
+          <PrivateRoutes>
+            <DashboardContent />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/dashboard/myCreatedContests",
+        element: (
+          <PrivateRoutes>
+            <MyCreatedContets />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/dashboard/submittedContests",
-        element: <SubmittedContests />,
+        element: (
+          <PrivateRoutes>
+            <SubmittedContests />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/dashboard/submissionDetails",
@@ -82,27 +105,52 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/manageUsers",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoutes>
+            <ManageUsers />
+          </AdminRoutes>
+        ),
       },
       {
         path: "/dashboard/manageContests",
-        element: <ManageContests />,
+        element: (
+          <AdminRoutes>
+            {" "}
+            <ManageContests />
+          </AdminRoutes>
+        ),
       },
       {
         path: "/dashboard/myParticipatedContests",
-        element: <MyParticipatedContests />,
+        element: (
+          <PrivateRoutes>
+            <MyParticipatedContests />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/dashboard/myWinningContests",
-        element: <MyWinningContests />,
+        element: (
+          <PrivateRoutes>
+            <MyWinningContests />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/dashboard/profile",
-        element: <Profile />,
+        element: (
+          <PrivateRoutes>
+            <Profile />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/dashboard/payment",
-        element: <Payment />,
+        element: (
+          <PrivateRoutes>
+            <Payment />
+          </PrivateRoutes>
+        ),
       },
     ],
   },

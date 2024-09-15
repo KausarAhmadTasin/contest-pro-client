@@ -80,6 +80,7 @@ const Navbar = () => {
             Home
           </li>
         </Link>
+
         <Link to="/allContests">
           <li
             className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
@@ -102,13 +103,24 @@ const Navbar = () => {
             Dashboard
           </li>
         </Link>
+        <Link to="/aboutUs">
+          <li
+            className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
+              location.pathname === "/aboutUs"
+                ? "underline decoration-white decoration-2 underline-offset-4"
+                : ""
+            }`}
+          >
+            About Us
+          </li>
+        </Link>
       </ul>
     </>
   );
 
   return (
     <div
-      className={`navbar fixed z-40 flex justify-between bg-[#0c243b] text-white w-full transition-transform duration-300`}
+      className={`navbar fixed z-50 flex justify-between bg-[#0c243b] text-white w-full transition-transform duration-300`}
     >
       <div className="">
         <div

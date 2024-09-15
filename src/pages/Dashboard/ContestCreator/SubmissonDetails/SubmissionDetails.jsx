@@ -34,7 +34,6 @@ const SubmissionDetails = () => {
         <span className="loading loading-dots loading-lg"></span>
       </div>
     );
-  console.log(participants);
 
   const handleWinnerClick = async (id) => {
     try {

@@ -29,7 +29,7 @@ const Dashboard = () => {
   const creatorLinks = (
     <>
       <li className="mt-2">
-        <NavLink to="/dashboard/myCreatedContests" end>
+        <NavLink to="/dashboard/myCreatedContests">
           <GiStairsGoal className="text-lg" />
           My Created Contests
         </NavLink>
@@ -44,6 +44,24 @@ const Dashboard = () => {
         <NavLink to="/dashboard/submittedContests">
           <VscFileSubmodule className="text-lg" />
           Submitted Contests
+        </NavLink>
+      </li>
+      <li className="mt-2">
+        <NavLink to="/dashboard/myParticipatedContests">
+          <FaUsers className="text-lg" />
+          My Participated Contest
+        </NavLink>
+      </li>
+      <li className="mt-2">
+        <NavLink to="/dashboard/myWinningContests">
+          <MdManageAccounts className="text-lg" />
+          My Winning Contests
+        </NavLink>
+      </li>
+      <li className="mt-2">
+        <NavLink to="/dashboard/profile">
+          <MdManageAccounts className="text-lg" />
+          Profile
         </NavLink>
       </li>
     </>
@@ -62,6 +80,42 @@ const Dashboard = () => {
         <NavLink to="/dashboard/manageContests">
           <MdManageAccounts className="text-lg" />
           Manage Contest
+        </NavLink>
+      </li>
+      <li className="mt-2">
+        <NavLink to="/dashboard/myCreatedContests">
+          <GiStairsGoal className="text-lg" />
+          My Created Contests
+        </NavLink>
+      </li>
+      <li className="mt-2">
+        <NavLink to="/dashboard/addContest">
+          <IoIosAddCircleOutline className="text-lg" />
+          Add Contest
+        </NavLink>
+      </li>
+      <li className="mt-2">
+        <NavLink to="/dashboard/submittedContests">
+          <VscFileSubmodule className="text-lg" />
+          Submitted Contests
+        </NavLink>
+      </li>
+      <li className="mt-2">
+        <NavLink to="/dashboard/myParticipatedContests">
+          <FaUsers className="text-lg" />
+          My Participated Contest
+        </NavLink>
+      </li>
+      <li className="mt-2">
+        <NavLink to="/dashboard/myWinningContests">
+          <MdManageAccounts className="text-lg" />
+          My Winning Contests
+        </NavLink>
+      </li>
+      <li className="mt-2">
+        <NavLink to="/dashboard/profile">
+          <MdManageAccounts className="text-lg" />
+          Profile
         </NavLink>
       </li>
     </>
@@ -95,7 +149,7 @@ const Dashboard = () => {
       <div className="flex w-full gap-x-5 pt-16 min-h-screen bg-[#f5f5f5] dark:bg-[#2f2f30] text-[#333333)]">
         <BsArrowRightSquareFill
           onClick={() => setIsDashboardOpen(!isDashboarOpen)}
-          className={`md:hidden absolute  top-20 text-4xl dark:text-[#2f567a] text-[#0C243B] duration-200 ${
+          className={`md:hidden absolute top-20 text-4xl dark:text-[#6ba3d8] text-[#6ba9e2] duration-200 ${
             isDashboarOpen ? "rotate-180 z-50 right-0" : "left-0"
           }`}
         />
@@ -107,12 +161,7 @@ const Dashboard = () => {
           >
             <ul className="menu text-base">
               {role === "creator" && creatorLinks}
-              {role === "admin" && (
-                <>
-                  {creatorLinks}
-                  {adminLinks}
-                </>
-              )}
+              {role === "admin" && adminLinks}
               {role === "user" && userLinks}
             </ul>
           </div>
@@ -123,12 +172,7 @@ const Dashboard = () => {
           >
             <ul className="menu text-base">
               {role === "creator" && creatorLinks}
-              {role === "admin" && (
-                <>
-                  {creatorLinks}
-                  {adminLinks}
-                </>
-              )}
+              {role === "admin" && adminLinks}
               {role === "user" && userLinks}
             </ul>
           </div>

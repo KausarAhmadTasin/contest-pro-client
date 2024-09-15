@@ -75,7 +75,10 @@ const Profile = () => {
               />
             </>
           ) : (
-            <p>Loading...</p>
+            <div className="flex justify-center items-center">
+              {" "}
+              <span className="loading loading-spinner loading-md"></span>
+            </div>
           )}
           <h2 className="text-xl text-center mt-8 mb-6">
             Your Winning Percentage

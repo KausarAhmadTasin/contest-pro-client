@@ -156,6 +156,7 @@ const Navbar = () => {
                         src={user.photoURL}
                         alt=""
                       />
+
                       <div className="absolute -bottom-1 -right-1 z-10 bg-white rounded-full flex items-center justify-center">
                         <IoIosArrowDown className=" text-blue-600 font-bold text-base" />
                       </div>

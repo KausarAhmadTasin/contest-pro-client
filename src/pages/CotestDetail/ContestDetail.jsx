@@ -29,7 +29,7 @@ const ContestDetail = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen text-gray-600 dark:text-gray-200">
-        Loading...
+        <span className="loading loading-dots loading-lg"></span>
       </div>
     );
   }

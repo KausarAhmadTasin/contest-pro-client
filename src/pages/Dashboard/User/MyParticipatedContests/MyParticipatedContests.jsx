@@ -49,7 +49,7 @@ const MyParticipatedContests = () => {
           {participatedContests.map((contest) => (
             <div
               key={contest._id}
-              className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg"
+              className="bg-gray-200 dark:bg-gray-800 p-4 rounded-lg"
             >
               <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
                 {contest.contest_title}

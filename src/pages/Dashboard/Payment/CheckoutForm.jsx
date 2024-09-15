@@ -59,7 +59,7 @@ const CheckoutForm = () => {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
@@ -139,9 +139,8 @@ const CheckoutForm = () => {
         <title>Payment - ContestPro</title>
       </Helmet>
 
-      <p className="text-gray-400 dark:text-gray-200 mb-4">
-        Payment Amount:{" "}
-        <span className="font-medium text-gray-500 text-lg">${price}</span>
+      <p className="text-gray-600 dark:text-gray-200 mb-4">
+        Payment Amount: <span className="font-medium text-lg">${price}</span>
       </p>
       <form onSubmit={handleCheckOutSubmit}>
         <CardElement
@@ -165,7 +164,7 @@ const CheckoutForm = () => {
             },
           }}
         />
-        <p className="text-center mt-10 text-gray-600">
+        <p className="text-center text-gray-600 dark:text-gray-200 mt-10">
           Complete payment and confirm registration for the contest
         </p>
         <button
@@ -174,7 +173,7 @@ const CheckoutForm = () => {
           disabled={!stripe || !clientSecret || isConfirming}
         >
           {isConfirming ? (
-            <span className="loading text-gray-700 loading-spinner loading-xs"></span>
+            <span className="loading text-gray-700 bg-green-300 loading-spinner loading-xs"></span>
           ) : (
             "Confirm"
           )}
@@ -191,7 +190,7 @@ const CheckoutForm = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-5 relative">
             <button
-              className="absolute right-2 top-2 text-2xl hover:scale-110 text-gray-500"
+              className="absolute right-2 top-2 text-2xl hover:scale-110"
               onClick={() => setIsOpen(false)}
             >
               <IoMdCloseCircleOutline />

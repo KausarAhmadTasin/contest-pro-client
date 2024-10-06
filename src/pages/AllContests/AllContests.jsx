@@ -85,6 +85,7 @@ const AllContests = () => {
                   Price:{" "}
                   <span className="font-bold">{contest.contestPrice} USD</span>
                 </p>
+
                 <p className="text-sm mb-2">
                   Deadline:{" "}
                   <span className="font-bold">

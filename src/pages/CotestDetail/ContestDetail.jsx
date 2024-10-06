@@ -4,13 +4,14 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import PrimaryBtn from "../../components/PrimaryBtn/PrimaryBtn";
 import { Helmet } from "react-helmet";
 import { useContext, useState } from "react";
-// import { Rating } from "react-simple-star-rating";
 import "./ContestDetail.css";
 import { AuthContext } from "../../providers/AuthProvider";
+import { toast } from "react-toastify";
 
 const ContestDetail = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+
   const {
     user: { email },
   } = useContext(AuthContext);
@@ -18,9 +19,33 @@ const ContestDetail = () => {
 
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
-  console.log(rating, email);
+  console.log(rating, email, id);
 
-  // const [userRating, setUserRating] = useState(0); // Store the user's rating
+  const handleRatingSubmit = async () => {
+    try {
+      if (rating && email) {
+        const res = await axiosSecure.patch("/contests/rating", {
+          rating: rating,
+          id: id,
+          participant_email: email,
+        });
+        if (res.data.modifiedCount) {
+          toast.success("Rating given");
+        }
+      }
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const { data: userInfo } = useQuery({
+    queryKey: ["userInfo", id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/role/${email}`);
+      return res.data;
+    },
+  });
 
   const {
     data: contest,
@@ -35,30 +60,14 @@ const ContestDetail = () => {
     enabled: !!id,
   });
 
+  const averageRating =
+    contest?.ratings?.length > 1
+      ? contest.ratings.reduce((acc, rating) => acc + rating, 0) /
+        (contest.ratings.length - 1)
+      : 0;
+
   const contestDeadline = new Date(contest?.contestDeadline);
   const isDeadlineOver = currentDate.getTime() > contestDeadline.getTime();
-
-  // const mutation = useMutation(
-  //   async (newRating) => {
-  //     const res = await axiosSecure.post(`/contests/${id}/rate`, {
-  //       rating: newRating,
-  //     });
-  //     return res.data;
-  //   },
-  //   {
-  //     onSuccess: (data) => {
-  //       // Handle success, maybe fetch updated contest data
-  //       console.log("Rating submitted successfully", data);
-  //     },
-  //     onError: (error) => {
-  //       console.error("Error submitting rating", error);
-  //     },
-  //   }
-  // );
-
-  // const handleRatingChange = (rating) => {
-  //   setUserRating(rating);
-  // };
 
   if (isLoading) {
     return (
@@ -127,6 +136,10 @@ const ContestDetail = () => {
                   {contest.taskSubmissionInstructions}
                 </p>
               </div>
+              <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
+                <span className="font-bold">Contest Ratings: </span>{" "}
+                {averageRating}
+              </p>
             </div>
 
             {/* Creator details */}
@@ -145,50 +158,63 @@ const ContestDetail = () => {
             </div>
 
             {/* Rating System */}
-            {/* <div className="my-6">
-              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+            <div className="my-6 dark:bg-gray-800 bg-[#F3F4F6] p-5 rounded-xl">
+              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
                 Rate This Contest
               </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                (Only users who participated in the contest can rate.
+                &quot;Admin&quot; and &quot;creators&quot; cannot rate this
+                contest.)
+              </p>
 
-              <div className="flex justify-center items-center rating-container">
-                <Rating
-                  count={0} // Set to 5 for 5 stars
-                  value={userRating}
-                  size={40}
-                  onChange={handleRatingChange}
-                  activeColor="#ffd700"
-                  inactiveColor="#ccc"
-                />
+              <div className="">
+                <div>
+                  {" "}
+                  {[0, 1, 2, 3, 4].map((star, index) => {
+                    const currentRating = index + 1;
+                    return (
+                      <label key={index}>
+                        <input
+                          type="radio"
+                          disabled={userInfo?.role !== "user"}
+                          name="rating"
+                          value={currentRating}
+                          onChange={() => setRating(currentRating)}
+                        />
+                        <span
+                          className={`star`}
+                          style={{
+                            color:
+                              currentRating <= (hover || rating)
+                                ? userInfo.role === "user"
+                                  ? "#ffc107"
+                                  : "#9EA2AA"
+                                : "#9EA2AA",
+                          }}
+                          onMouseEnter={() => setHover(currentRating)}
+                          onMouseLeave={() => setHover(null)}
+                        >
+                          &#9733;
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+
+                <button
+                  onClick={handleRatingSubmit}
+                  disabled={userInfo?.role !== "user"}
+                  className={`mt-4 px-4 py-2 rounded text-gray-800  font-bold ${
+                    userInfo?.role !== "user"
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-[#c5f35b] hover:bg-[#c2f155]"
+                  }`}
+                >
+                  Submit Rating
+                </button>
               </div>
-            </div> */}
-
-            {[0, 1, 2, 3, 4].map((star, index) => {
-              const currentRating = index + 1;
-              return (
-                <label key={index}>
-                  <input
-                    type="radio"
-                    disabled
-                    name="rating"
-                    value={currentRating}
-                    onChange={() => setRating(currentRating)}
-                  />
-                  <span
-                    className="star"
-                    style={{
-                      color:
-                        currentRating <= (hover || rating)
-                          ? "#ffc107"
-                          : "#e4e5e9",
-                    }}
-                    onMouseEnter={() => setHover(currentRating)}
-                    onMouseLeave={() => setHover(null)}
-                  >
-                    &#9733;
-                  </span>
-                </label>
-              );
-            })}
+            </div>
 
             {/* Register or Deadline Passed */}
             <div className="flex w-full justify-center mt-8">

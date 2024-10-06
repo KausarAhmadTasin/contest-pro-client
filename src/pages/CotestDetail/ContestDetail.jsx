@@ -21,24 +21,6 @@ const ContestDetail = () => {
   const [hover, setHover] = useState(null);
   console.log(rating, email, id);
 
-  const handleRatingSubmit = async () => {
-    try {
-      if (rating && email) {
-        const res = await axiosSecure.patch("/contests/rating", {
-          rating: rating,
-          id: id,
-          participant_email: email,
-        });
-        if (res.data.modifiedCount) {
-          toast.success("Rating given");
-        }
-      }
-    } catch (error) {
-      console.error("Error submitting rating:", error);
-      toast.error(error.response.data.message);
-    }
-  };
-
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo", id],
     queryFn: async () => {
@@ -51,6 +33,7 @@ const ContestDetail = () => {
     data: contest,
     isLoading,
     isError,
+    refetch: contestRefetch,
   } = useQuery({
     queryKey: ["contest", id],
     queryFn: async () => {
@@ -59,6 +42,25 @@ const ContestDetail = () => {
     },
     enabled: !!id,
   });
+
+  const handleRatingSubmit = async () => {
+    try {
+      if (rating && email) {
+        const res = await axiosSecure.patch("/contests/rating", {
+          rating: rating,
+          id: id,
+          participant_email: email,
+        });
+        if (res.data.modifiedCount) {
+          toast.success("Rating given");
+          contestRefetch();
+        }
+      }
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   const averageRating =
     contest?.ratings?.length > 1
@@ -138,7 +140,7 @@ const ContestDetail = () => {
               </div>
               <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
                 <span className="font-bold">Contest Ratings: </span>{" "}
-                {averageRating}
+                {averageRating.toFixed(2)}
               </p>
             </div>
 

@@ -12,6 +12,8 @@
 
 ## Features
 
+**New Feature:** Rating option added. Only the participants who have participated in a contest can rate that particular contest even after the applition date is over. Admin and the creator of the contest cannot rate that contest.
+
 - **Admin Dashboard:** Includes controls for managing contests and users.
 - **User Roles:**
   - **Admin:** Has access to all features, including user management.

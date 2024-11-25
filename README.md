@@ -62,7 +62,8 @@
 
 
 ### Frontend-Backend Interaction
-API Communication:
+
+**API Communication:**
 
 The frontend, built with React, used Axios and React Query for efficient API calls to the backend. Data fetching was optimized with background re-fetching.
 APIs were designed in Express.js to handle CRUD operations for contests, user management, and participant data.

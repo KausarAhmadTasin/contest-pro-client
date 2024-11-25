@@ -101,8 +101,11 @@ Solution: Used Stripe’s server-side SDK to verify payments and implemented web
 **This project highlighted the importance of:**
 
 💠Secure and efficient API design.
+
 💠Clear role-based access control.
+
 💠The need for robust server-side validations to maintain data integrity.
+
 💠Tools like React Query and JWT in building scalable and secure applications.
 
 ## How to Run the Project

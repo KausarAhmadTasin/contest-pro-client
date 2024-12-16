@@ -146,7 +146,7 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-      <div className="flex w-full gap-x-5 pt-16 min-h-screen bg-[#f5f5f5] dark:bg-[#2f2f30] text-[#333333)]">
+      <div className="flex w-full gap-x-5 pt-20 min-h-screen bg-[#f5f5f5] dark:bg-[#2f2f30] text-[#333333)]">
         <BsArrowRightSquareFill
           onClick={() => setIsDashboardOpen(!isDashboarOpen)}
           className={`md:hidden absolute top-20 text-4xl dark:text-[#6ba3d8] text-[#6ba9e2] duration-200 ${
@@ -167,7 +167,7 @@ const Dashboard = () => {
           </div>
         ) : (
           <div
-            className={`md:w-1/5 w-full z-40 md:block hidden md:min-h-full bg-[#6380a3] text-white duration-200
+            className={`md:w-1/5 w-full z-40 md:block hidden md:min-h-full pt-4 bg-gradient-to-r from-blue-900  to-blue-950 opacity-90 text-white duration-200
             }`}
           >
             <ul className="menu text-base">

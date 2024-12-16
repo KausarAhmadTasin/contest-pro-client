@@ -1,9 +1,11 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
-import PrimaryBtn from "../../components/PrimaryBtn/PrimaryBtn";
 import { useState, useEffect } from "react";
+import "./AllContests.css";
+import { IoMdOptions } from "react-icons/io";
+import ContestCard from "../../components/shared/ContestCard/ContestCard";
 
 const AllContests = () => {
   const axiosPublic = useAxiosPublic();
@@ -11,6 +13,18 @@ const AllContests = () => {
   const [contestType, setContestType] = useState(
     searchParams.get("contestType") || ""
   );
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const options = ["Book Review", "Movie Review", "Article Writing", "Others"];
+
+  const handleOptionChange = (option) => {
+    if (selectedOptions.includes(option)) {
+      setSelectedOptions(selectedOptions.filter((item) => item !== option));
+    } else {
+      setSelectedOptions([...selectedOptions, option]);
+    }
+  };
 
   const {
     data: contests = [],
@@ -34,19 +48,22 @@ const AllContests = () => {
       <Helmet>
         <title>All Contests - Contest Pro</title>
       </Helmet>
-      <div className="min-h-screen text-gray-600 dark:text-gray-300 p-6 dark:bg-[#2f2f30]">
-        <h1 className="text-2xl font-bold mb-4">All Contests</h1>
+      <div className="min-h-screen bg-gradient-to-br from-indigo-300 via-gray-300 to-[#c5f3d8] p-6 pt-28 relative">
+        <div className="absolute inset-0 bg-black bg-opacity-25 pointer-events-none"></div>
 
         {/* Contest Type Filter */}
-        <div className="mb-6">
-          <label htmlFor="contestType" className="text-lg font-semibold">
+        <div className="relative z-10 mb-6">
+          <label
+            htmlFor="contestType"
+            className="text-lg text-white font-semibold"
+          >
             Filter by Contest Type:
           </label>
           <select
             id="contestType"
             value={contestType}
             onChange={(e) => setContestType(e.target.value)}
-            className="ml-4 p-2 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+            className="ml-4 p-2 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow focus:ring focus:ring-purple-400"
           >
             <option value="">All</option>
             <option value="Book Review">Book Review</option>
@@ -56,61 +73,56 @@ const AllContests = () => {
           </select>
         </div>
 
-        {/* Loading State */}
-        {isLoading ? (
-          <p className="text-center text-gray-600 dark:text-gray-300">
-            <span className="loading loading-dots loading-lg"></span>
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {contests.map((contest, index) => (
-              <div
-                key={index}
-                className="bg-white dark:bg-[#1F2937] shadow-md rounded-lg p-4 flex flex-col items-start"
-              >
-                <img
-                  src={contest.image}
-                  alt={contest.contestName}
-                  className="w-full object-cover rounded-lg mb-4"
-                />
-                <h2 className="text-xl font-bold mb-2">
-                  {contest.contestName}
-                </h2>
-                <p className="text-sm mb-2">{contest.contestDescription}</p>
-                <p className="text-sm font-semibold mb-2">
-                  Prize Money:{" "}
-                  <span className="font-bold">{contest.prizeMoney}</span>
-                </p>
-                <p className="text-sm mb-2">
-                  Price:{" "}
-                  <span className="font-bold">{contest.contestPrice} USD</span>
-                </p>
+        {/* Filter and contest cards */}
+        <div className="flex md:flex-row flex-col justify-between gap-4">
+          {/* Filter */}
+          <div className="bg-gray-600 font-sans opacity-90 text-white w-full md:max-w-xs p-4 rounded-lg">
+            <h3 className="flex justify-between text-xl font-semibold mb-6">
+              Filters <IoMdOptions />
+            </h3>
+            <div className="space-y-2">
+              {options.map((option, index) => (
+                <label
+                  key={index}
+                  className="flex items-center space-x-2 cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedOptions.includes(option)}
+                    onChange={() => handleOptionChange(option)}
+                    className="bg-white w-4 h-4 rounded-full border border-black checked:bg-blue-500 checked:border-blue-500"
+                  />
+                  <span className="font-medium">{option}</span>
+                </label>
+              ))}
+            </div>
+            <div className="mt-4 text-white">
+              <strong>Selected Options:</strong>{" "}
+              <div className="border-2 border-gray-400 rounded-md px-3 py-2 min-h-24">
+                {selectedOptions.join(", ") || "None"}
+              </div>
+            </div>
+          </div>
 
-                <p className="text-sm mb-2">
-                  Deadline:{" "}
-                  <span className="font-bold">
-                    {new Date(contest.contestDeadline).toLocaleDateString()}
-                  </span>
-                </p>
-                <p className="text-sm mb-2">
-                  Task Submission:{" "}
-                  <span className="font-bold">
-                    {contest.taskSubmissionInstructions}
-                  </span>
-                </p>
-                <p className="text-sm">
-                  Contest Type:{" "}
-                  <span className="font-bold">{contest.contestType}</span>
-                </p>
-                <div className="flex justify-center w-full mt-4">
-                  <Link to={`/contestDetails/${contest._id}`}>
-                    <PrimaryBtn>Details</PrimaryBtn>
-                  </Link>
+          {/* contents */}
+          <div className="flex-grow">
+            {/* Loading State */}
+            {isLoading ? (
+              <p className="text-center text-gray-100">
+                <span className="loading loading-dots loading-lg"></span>
+              </p>
+            ) : (
+              // Cards
+              <div className="border-2 border-white pl-3 py-2 rounded-md">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-2 overflow-auto max-h-screen custom-scrollbar relative z-10">
+                  {contests.map((contest) => (
+                    <ContestCard key={contest._id} contest={contest} />
+                  ))}
                 </div>
               </div>
-            ))}
+            )}
           </div>
-        )}
+        </div>
       </div>
     </>
   );

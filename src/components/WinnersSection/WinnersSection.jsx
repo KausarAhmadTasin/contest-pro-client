@@ -27,52 +27,70 @@ const WinnerSection = () => {
   }, [data]);
 
   return (
-    <section className="relative md:container md:mx-auto mx-4 pb-16 pt-10 md:px-20 px-5 my-20 rounded-2xl bg-gray-200 dark:bg-gray-900">
+    <section className="relative select-none md:container md:mx-auto mx-4 pb-16 pt-10 md:px-20 px-5 my-14 rounded-2xl bg-gradient-to-br from-[#1F2A40] to-[#2D4059] dark:from-gray-800 dark:to-gray-900 text-white shadow-2xl">
+      {/* Section Header */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-5 text-gray-800 dark:text-gray-200">
+        <h2 className="text-4xl font-extrabold mb-4 text-white">
           Contest Winners
         </h2>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">
+        <p className="text-gray-300 mt-2 max-w-2xl mx-auto">
           Get inspired by our latest contest winners and participate to win
-          exciting prizes!
+          exciting prizes! Show your skills and be the next name on this list.
         </p>
       </div>
 
+      {/* Loading State */}
       {isLoading ? (
         <div className="flex w-full justify-center items-center">
-          <span className="loading  loading-dots loading-lg"></span>
+          <span className="loading loading-dots loading-lg"></span>
         </div>
       ) : (
-        <div className="grid justify-center items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid justify-center items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {winnerStats.winners.map((winner, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6"
+              className="relative bg-white font-sans dark:bg-gray-800 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 p-6 flex flex-col items-start justify-between space-y-4 border-2 border-transparent hover:border-blue-400 dark:hover:border-blue-500"
             >
-              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                 {winner.contest_title}
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                Winner: {winner.participant_email}
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Winner:{" "}
+                <span className="font-bold text-indigo-600 dark:text-indigo-300 text-lg">
+                  {winner.participant_name}
+                </span>
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Prize: ${winner.contest_prize}
+                Prize:{" "}
+                <span className="font-semibold text-indigo-600 dark:text-indigo-300">
+                  ${winner.contest_prize}
+                </span>
               </p>
+              <div className="absolute -top-3 -right-6 bg-indigo-600 dark:bg-indigo-700 text-white px-3 py-1 text-sm rounded-full shadow-md">
+                #{index + 1}
+              </div>
+              <div className="absolute inset-0 rounded-xl pointer-events-none bg-gradient-to-br from-indigo-50 to-transparent dark:from-indigo-900 opacity-20"></div>
             </div>
           ))}
         </div>
       )}
 
-      <div className="text-center mt-12">
-        <p className="text-gray-600 dark:text-gray-400">
-          Total Participants: {winnerStats.totalParticipants}
+      {/* Stats and CTA */}
+      <div className="text-center font-sans mt-12 space-y-3">
+        <p className="text-lg text-gray-300">
+          Total Participants:{" "}
+          <span className="font-bold text-indigo-400 dark:text-indigo-300">
+            {winnerStats.totalParticipants}
+          </span>
         </p>
-        <p className="text-gray-600 dark:text-gray-400">
-          Total Winners: {winnerStats.totalWinners}
+        <p className="text-lg text-gray-300">
+          Total Winners:{" "}
+          <span className="font-bold text-indigo-400 dark:text-indigo-300">
+            {winnerStats.totalWinners}
+          </span>
         </p>
         <Link to="/allContests">
-          {" "}
-          <button className="mt-6 px-6 py-3 bg-blue-500 dark:bg-blue-700 text-white rounded-md">
+          <button className="bg-gradient-to-r from-blue-700 to-indigo-600 hover:from-blue-600 hover:to-purple-800 text-white font-medium py-2 px-6 rounded-full shadow-md transition-transform duration-300 transform hover:scale-105 mt-10">
             Participate Now
           </button>
         </Link>

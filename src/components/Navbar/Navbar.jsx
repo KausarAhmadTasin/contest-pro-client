@@ -1,16 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosSearch } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const [isDrawerOpen, setIsDrwerOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Read initial theme state from localStorage
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
   });
@@ -19,9 +20,7 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Apply the theme to the document
     document.documentElement.className = isDarkMode ? "dark" : "light";
-    // Save the theme state to localStorage
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
@@ -66,14 +65,21 @@ const Navbar = () => {
     </>
   );
 
+  const handleSearch = () => {
+    if (searchTerm) {
+      // Navigate to a route where search results are displayed with the query
+      navigate(`/allContests?contestType=${searchTerm}`);
+    }
+  };
+
   const navLinksMain = (
     <>
-      <ul className="flex md:flex-row flex-col">
+      <ul className="flex md:flex-row flex-col items-start">
         <Link to="/">
           <li
-            className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
+            className={`hover:underline mb-4 md:mb-0 hover:underline-offset-4 rounded-md py-1 md:px-5 ${
               location.pathname === "/"
-                ? "underline decoration-white decoration-2 underline-offset-4"
+                ? "underline decoration-gray-300 decoration-2 underline-offset-4"
                 : ""
             }`}
           >
@@ -83,20 +89,20 @@ const Navbar = () => {
 
         <Link to="/allContests">
           <li
-            className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
+            className={`hover:underline mb-4 md:mb-0 hover:underline-offset-4 rounded-md py-1 md:px-5 ${
               location.pathname === "/allContests"
-                ? "underline decoration-white decoration-2 underline-offset-4"
+                ? "underline decoration-gray-300 decoration-2 underline-offset-4"
                 : ""
             }`}
           >
-            All Contest
+            Contests
           </li>
         </Link>
         <Link to="/dashboard">
           <li
-            className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
+            className={`hover:underline mb-4 md:mb-0 hover:underline-offset-4 rounded-md py-1 md:px-5 ${
               location.pathname === "/dashboard"
-                ? "underline decoration-white decoration-2 underline-offset-4"
+                ? "underline decoration-gray-300 decoration-2 underline-offset-4"
                 : ""
             }`}
           >
@@ -105,94 +111,140 @@ const Navbar = () => {
         </Link>
         <Link to="/aboutUs">
           <li
-            className={`hover:bg-[#1f4769] rounded-md py-1 px-2 ${
-              location.pathname === "/aboutUs"
-                ? "underline decoration-white decoration-2 underline-offset-4"
-                : ""
-            }`}
+            className={`hover:underline mb-4 md:mb-0 hover:underline-offset-4
+                rounded-md py-1 md:px-5 ${
+                  location.pathname === "/aboutUs"
+                    ? "underline decoration-gray-300 decoration-2 underline-offset-4"
+                    : ""
+                }`}
           >
             About Us
           </li>
         </Link>
+        <li>
+          <div className="relative flex md:hidden justify-center items-center">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search contests by type..."
+              className="max-w-xl w-56 px-4 py-2 pr-10 bg-slate-50 border-2 border-sky-400 dark:border-indigo-100 rounded-md focus:outline-none dark:bg-slate-700 text-gray-800 dark:text-gray-200"
+            />
+            <div
+              onClick={handleSearch}
+              className="absolute right-0 px-4 py-3 text-lg font-bold text-indigo-600 dark:text-indigo-100 dark:text-gray-30000 rounded-e "
+            >
+              <IoIosSearch />
+            </div>
+          </div>
+        </li>
       </ul>
     </>
   );
 
   return (
     <div
-      className={`navbar fixed z-50 flex justify-between bg-[#0c243b] text-white w-full transition-transform duration-300`}
+      className={`navbar select-none fixed z-50 top-0 px-4 bg-gradient-to-r from-indigo-950 via-green-950 to-blue-950 shadow-lg text-white w-full transition-transform duration-300 py-5`}
     >
-      <div className="">
-        <div
-          className="md:hidden text-lg ml-2"
-          onClick={() => setIsDrwerOpen(!isDrawerOpen)}
-        >
-          {" "}
-          {isDrawerOpen ? <IoCloseOutline /> : <RxHamburgerMenu />}
-        </div>
-        <Link to="/">
-          <p className="btn btn-ghost text-xl">ContestPro</p>
-        </Link>
-      </div>
-      <div className="hidden lg:block flex-gorw">{navLinksMain}</div>
-      <div
-        className={`absolute md:hidden duration-200 py-4 px-5 opacity-90 top-16 bg-[#102d49] flex-gorw ${
-          isDrawerOpen ? "left-1 " : "-left-40"
-        }`}
-      >
-        {navLinksMain}
-      </div>
-      <div className="flex-none">
-        {swap}
-        {user ? (
-          <>
-            {user?.photoURL && (
-              <>
-                <Popover className="relative z-50">
-                  <PopoverButton className="flex mr-4 gap-x-2 items-center text-sm/6 font-semibold text-white/50 focus:outline-none data-[active]:text-white data-[hover]:text-white data-[focus]:outline-1 data-[focus]:outline-white">
-                    <div className="relative">
-                      <img
-                        className="h-9 w-9 rounded-full"
-                        src={user.photoURL}
-                        alt=""
-                      />
-
-                      <div className="absolute -bottom-1 -right-1 z-10 bg-white rounded-full flex items-center justify-center">
-                        <IoIosArrowDown className=" text-blue-600 font-bold text-base" />
-                      </div>
-                    </div>
-                  </PopoverButton>
-                  <PopoverPanel
-                    anchor="bottom"
-                    className="flex mt-3 bg-black/80 py-5 px-5 md:w-1/6 w-1/2 text-center flex-col divide-y divide-white/5 rounded-xl text-sm/6 transition duration-200 ease-in-out"
-                  >
-                    <p className="block rounded-lg py-2 px-3 transition font-semibold text-gray-100">
-                      {user && user?.displayName}
-                    </p>
-                    <Link to="/dashboard">
-                      <p className="block rounded-lg py-2 px-3 text-gray-200 my-2 transition hover:bg-white/5">
-                        Dashboard
-                      </p>
-                    </Link>
-
-                    <p
-                      onClick={handleLogOut}
-                      className="rounded-lg py-2 px-3 transition bg-gray-800 text-rose-500 btn hover:bg-white/5"
-                    >
-                      Logout
-                    </p>
-                  </PopoverPanel>
-                </Popover>
-              </>
-            )}
-          </>
-        ) : (
-          <Link to="/signIn">
-            <p className="mr-6 text-base font-semibold cursor-pointer hover:underline underline-offset-2">
-              Login
+      <div className="container mx-auto flex justify-between">
+        <div className="flex items-center">
+          <div
+            className="md:hidden text-2xl ml-2"
+            onClick={() => setIsDrwerOpen(!isDrawerOpen)}
+          >
+            {" "}
+            {isDrawerOpen ? <IoCloseOutline /> : <RxHamburgerMenu />}
+          </div>
+          <Link to="/">
+            <p className="btn btn-ghost font-semibold text-xl text-gradient bg-gradient-to-r from-blue-300 to-lime-400 bg-clip-text text-transparent">
+              ContestPro
             </p>
           </Link>
-        )}
+        </div>
+
+        {/* Navlinks full screen */}
+        <div className="hidden lg:block flex-gorw">{navLinksMain}</div>
+        <div
+          className={`absolute md:hidden h-screen bg-gradient-to-r from-indigo-950 to-blue-950 duration-200 py-4 px-5 pr-20 opacity-95 top-20 bg-[#102d49] flex-gorw ${
+            isDrawerOpen ? "left-0 " : "-left-96"
+          }`}
+        >
+          {navLinksMain}
+        </div>
+
+        {/* Nav right */}
+        <div className="flex gap-x-4 justify-between items-center">
+          {/* Search Bar */}
+          <div>{swap}</div>
+          <div className="relative hidden md:flex justify-center items-center">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search contests by type..."
+              className="max-w-xl w-80 px-4 py-2 pr-10 bg-slate-50 border-2 border-sky-400 dark:border-indigo-100 rounded-md focus:outline-none dark:bg-slate-700 text-gray-800 dark:text-gray-200"
+            />
+            <div
+              onClick={handleSearch}
+              className="absolute right-0 px-4 py-3 text-lg font-bold text-indigo-600 dark:text-indigo-100 dark:text-gray-30000 rounded-e "
+            >
+              <IoIosSearch />
+            </div>
+          </div>
+
+          {/* Profile Image */}
+          <div className="flex-none">
+            {user ? (
+              <>
+                {user?.photoURL && (
+                  <>
+                    <Popover className="relative z-50">
+                      <PopoverButton className="flex mr-4 gap-x-2 items-center text-sm/6 font-semibold text-white/50 focus:outline-none data-[active]:text-white data-[hover]:text-white data-[focus]:outline-1 data-[focus]:outline-white">
+                        <div className="relative">
+                          <img
+                            className="h-9 w-9 rounded-full"
+                            src={user.photoURL}
+                            alt=""
+                          />
+
+                          <div className="absolute -bottom-1 -right-1 z-10 bg-white rounded-full flex items-center justify-center">
+                            <IoIosArrowDown className="text-gray-600 flex-grow mt-[.08rem] font-bold text-base" />
+                          </div>
+                        </div>
+                      </PopoverButton>
+                      <PopoverPanel
+                        anchor="bottom"
+                        className="flex mt-3 bg-black/80 py-5 px-5 md:w-1/6 w-1/2 text-center flex-col divide-y divide-white/5 rounded-xl text-sm/6 transition duration-200 ease-in-out"
+                      >
+                        <p className="block rounded-lg py-2 px-3 transition font-semibold text-gray-100">
+                          {user && user?.displayName}
+                        </p>
+                        <Link to="/dashboard">
+                          <p className="block rounded-lg py-2 px-3 text-gray-200 my-2 transition hover:bg-white/5">
+                            Dashboard
+                          </p>
+                        </Link>
+
+                        <p
+                          onClick={handleLogOut}
+                          className="rounded-lg py-2 px-3 transition bg-gray-800 text-rose-500 btn hover:bg-white/5"
+                        >
+                          Logout
+                        </p>
+                      </PopoverPanel>
+                    </Popover>
+                  </>
+                )}
+              </>
+            ) : (
+              <Link to="/signIn">
+                <p className="mr-6 text-base font-semibold cursor-pointer hover:underline underline-offset-2">
+                  Login
+                </p>
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

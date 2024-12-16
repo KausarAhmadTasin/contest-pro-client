@@ -6,7 +6,7 @@ import Footer from "./components/Footer/Footer";
 function App() {
   return (
     <>
-      <div className="bg-[#f5f5f5] dark:bg-[#2f2f30] text-[#333333)]">
+      <div className="bg-accent font-roboto dark:bg-black text-[#333333)]">
         <Navbar />
         <Outlet />
         <Footer />

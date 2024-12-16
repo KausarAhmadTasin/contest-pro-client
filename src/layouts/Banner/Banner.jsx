@@ -1,70 +1,86 @@
-import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleSearch = () => {
-    if (searchTerm) {
-      // Navigate to a route where search results are displayed with the query
-      navigate(`/allContests?contestType=${searchTerm}`);
-    }
-  };
-
   return (
-    <section
-      className="relative md:container md:mx-auto mx-2 rounded-xl bg-cover bg-center bg-no-repeat h-[60vh] md:h-[80vh] flex items-center justify-center"
-      style={{
-        backgroundImage:
-          'url("https://i.ibb.co/pKPdgLD/ariel-Hk-N64-BISu-QA-unsplash.jpg")',
-      }}
-    >
-      <div className="absolute rounded-xl inset-0 bg-black/60"></div>
-      <div className="relative z-10 text-center text-white p-5">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Welcome to ContestPro
+    <section className="relative py-16 md:py-0">
+      {/* Blurry Background Layers */}
+      <div className="absolute inset-0 bg-black opacity-40 backdrop-blur-lg"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-800 opacity-25 backdrop-blur-xl"></div>
+      <div className="absolute inset-0 bg-gray-900 opacity-40 backdrop-blur-3xl"></div>
+
+      {/* Static Content */}
+      <div className="container mx-auto relative flex flex-col items-center bg-transparent text-gray-800 justify-center h-full text-center px-8 md:px-12 md:py-16">
+        {/* Title Section */}
+        <h1 className="text-4xl text-gray-200 md:text-5xl tracking-wide mb-3">
+          Welcome to{" "}
+          <span className="text-gradient bg-gradient-to-r from-blue-300 to-lime-400 bg-clip-text text-transparent">
+            ContestPro
+          </span>
         </h1>
-        <p className="text-lg md:text-xl mb-6">
-          Find and participate in the best contests across various categories!
+        <p className="text-lg md:text-lg font-mono font-thin text-gray-100 max-w-3xl my-4">
+          Your ultimate hub for finding, hosting, and winning contests! Whether
+          you&apos;re a creator, participant, or enthusiast, ContestPro is your
+          gateway to success.
+        </p>
+        <p className="text-sm md:text-base dark:text-pink-500 text-indigo-300 font-bold italic mt-2">
+          &quot;Unleash your potential and take your ambitions to the next
+          level.&quot;
         </p>
 
-        {/* Search Bar */}
-        <div className="flex justify-center pt-5 items-center">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search contests by type..."
-            className="w-full max-w-lg px-4 py-2 rounded-s-md focus:outline-none bg-white dark:bg-slate-700 text-gray-600 dark:text-gray-200 focus:ring"
-          />
-          <button
-            onClick={handleSearch}
-            className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-e-md"
+        {/* Navigation Links */}
+        <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 mt-8">
+          <Link
+            to="/signUp"
+            className="bg-gradient-to-r from-blue-900 to-indigo-800 hover:from-blue-600 hover:to-purple-700 text-white font-medium py-2 px-6 rounded-full shadow-md transition-transform duration-300 transform hover:scale-105"
           >
-            Search
-          </button>
+            Get Started
+          </Link>
+          <Link
+            to="/aboutUs"
+            className="py-2 px-6 rounded-full border-2 border-indigo-800 text-accent shadow-md hover:bg-indigo-800 hover:text-white hover:scale-105 transition-transform duration-300"
+          >
+            Learn More
+          </Link>
         </div>
 
-        {/* Links */}
-        <nav className="mt-6">
-          <ul className="flex justify-center gap-4">
-            <li
-              className={`hover:bg-[#183753] rounded-md py-1 px-2 ${
-                location.pathname === "/" ? "underline decoration-white" : ""
-              }`}
-            >
-              <Link to="/">Home</Link>
-            </li>
-            <li className="hover:bg-[#183753] rounded-md py-1 px-2">
-              <Link to="/allContests">All Contests</Link>
-            </li>
-            <li className="hover:bg-[#183753] rounded-md py-1 px-2">
-              <Link to="/signUp">Sign Up</Link>
-            </li>
-          </ul>
-        </nav>
+        {/* Added Benefits Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 w-full px-4">
+          <div className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg bg-white dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 transition-transform transform hover:scale-105">
+            <div className="w-16 h-16 flex items-center justify-center text-white text-xl rounded-full bg-blue-500 shadow-lg mb-4">
+              🏆
+            </div>
+            <h3 className="font-semibold text-lg text-blue-700 dark:text-blue-200 mb-2">
+              Win Rewards
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Participate and win exciting prizes in contests tailored to your
+              skills.
+            </p>
+          </div>
+          <div className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg bg-white dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 transition-transform transform hover:scale-105">
+            <div className="w-16 h-16 flex items-center justify-center text-white text-xl rounded-full bg-green-500 shadow-lg mb-4">
+              🌟
+            </div>
+            <h3 className="font-semibold text-lg text-green-700 dark:text-green-200 mb-2">
+              Showcase Talent
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Use our platform to highlight your abilities and gain recognition.
+            </p>
+          </div>
+          <div className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg bg-white dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 transition-transform transform hover:scale-105">
+            <div className="w-16 h-16 flex items-center justify-center text-white text-xl rounded-full bg-indigo-500 shadow-lg mb-4">
+              🤝
+            </div>
+            <h3 className="font-semibold text-lg text-indigo-700 dark:text-indigo-200 mb-2">
+              Connect Globally
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Engage with a global community of creators, participants, and
+              enthusiasts.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );

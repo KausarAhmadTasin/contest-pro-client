@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import PrimaryBtn from "../../components/PrimaryBtn/PrimaryBtn";
 import { Helmet } from "react-helmet";
 import { useContext, useState } from "react";
 import "./ContestDetail.css";
 import { AuthContext } from "../../providers/AuthProvider";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const ContestDetail = () => {
   const { id } = useParams();
@@ -46,7 +46,7 @@ const ContestDetail = () => {
   const handleRatingSubmit = async () => {
     try {
       if (rating && email) {
-        const res = await axiosSecure.patch("/contests/rating", {
+        const res = await axios.patch("http://localhost:5000/contests/rating", {
           rating: rating,
           id: id,
           participant_email: email,
@@ -92,144 +92,142 @@ const ContestDetail = () => {
       <Helmet>
         <title>Contest Details - ContestPro</title>
       </Helmet>
-      <div className="container mx-auto px-4 py-8 pt-20">
-        <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
+      <div className="container mx-auto px-4 py-8 pt-28 font-sans">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden">
+          {/* Header Image with Overlay */}
           <div className="relative">
             <img
               src={contest.image}
               alt={contest.contestName}
               className="w-full h-72 object-cover object-center"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-              <h1 className="text-4xl font-bold text-white px-4 text-center">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center">
+              <h1 className="text-4xl font-extrabold text-white text-center px-4">
                 {contest.contestName}
               </h1>
             </div>
           </div>
 
-          <div className="p-6">
-            {/* Contest details */}
+          {/* Contest Details */}
+          <div className="p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
-                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                  <span className="font-bold">Description: </span>
+                <p className="text-gray-800 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-semibold">Description:</span>{" "}
                   {contest.contestDescription}
                 </p>
-                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                  <span className="font-bold">Prize Money: </span>
+                <p className="text-gray-800 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-semibold">Prize Money:</span> $
                   {contest.prizeMoney}
                 </p>
-                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                  <span className="font-bold">Contest Price: </span>${" "}
+                <p className="text-gray-800 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-semibold">Contest Price:</span> $
                   {contest.contestPrice}
                 </p>
               </div>
               <div>
-                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                  <span className="font-bold">Type: </span>
+                <p className="text-gray-800 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-semibold">Type:</span>{" "}
                   {contest.contestType}
                 </p>
-                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                  <span className="font-bold">Deadline: </span>
+                <p className="text-gray-800 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-semibold">Deadline:</span>{" "}
                   {new Date(contest.contestDeadline).toLocaleDateString()}
                 </p>
-                <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                  <span className="font-bold">Submission Instructions: </span>
+                <p className="text-gray-800 dark:text-gray-400 text-lg mb-4">
+                  <span className="font-semibold">
+                    Submission Instructions:
+                  </span>{" "}
                   {contest.taskSubmissionInstructions}
                 </p>
               </div>
-              <p className="text-gray-700 dark:text-gray-400 text-lg mb-4">
-                <span className="font-bold">Contest Ratings: </span>{" "}
-                {averageRating.toFixed(2)}
-              </p>
             </div>
 
-            {/* Creator details */}
-            <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
-              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+            {/* Average Ratings */}
+            <div className="text-gray-800 dark:text-gray-400 text-lg mb-6 border-t pt-4">
+              <span className="font-semibold">Contest Ratings:</span>{" "}
+              {averageRating.toFixed(2)}
+            </div>
+
+            {/* Creator Details */}
+            <div className="bg-gray-100 dark:bg-slate-800 p-6 rounded-lg mb-6 dark:border">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-200 mb-4">
                 Created By
               </h2>
               <p className="text-gray-700 dark:text-gray-400 text-lg">
-                <span className="font-bold">Name: </span>
+                <span className="font-semibold">Name:</span>{" "}
                 {contest.creator.name}
               </p>
               <p className="text-gray-700 dark:text-gray-400 text-lg">
-                <span className="font-bold">Email: </span>
+                <span className="font-semibold">Email:</span>{" "}
                 {contest.creator.email}
               </p>
             </div>
 
             {/* Rating System */}
-            <div className="my-6 dark:bg-gray-800 bg-[#F3F4F6] p-5 rounded-xl">
-              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+            <div className="my-6 bg-gray-50 dark:bg-slate-800 dark:border p-6 rounded-lg shadow-inner">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-200 mb-2">
                 Rate This Contest
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                (Only users who participated in the contest can rate.
-                &quot;Admin&quot; and &quot;creators&quot; cannot rate this
-                contest.)
+                (Only users who participated in the contest can rate. Admins and
+                creators cannot rate this contest.)
               </p>
-
-              <div className="">
-                <div>
-                  {" "}
-                  {[0, 1, 2, 3, 4].map((star, index) => {
-                    const currentRating = index + 1;
-                    return (
-                      <label key={index}>
-                        <input
-                          type="radio"
-                          disabled={userInfo?.role !== "user"}
-                          name="rating"
-                          value={currentRating}
-                          onChange={() => setRating(currentRating)}
-                        />
-                        <span
-                          className={`star`}
-                          style={{
-                            color:
-                              currentRating <= (hover || rating)
-                                ? userInfo.role === "user"
-                                  ? "#ffc107"
-                                  : "#9EA2AA"
-                                : "#9EA2AA",
-                          }}
-                          onMouseEnter={() => setHover(currentRating)}
-                          onMouseLeave={() => setHover(null)}
-                        >
-                          &#9733;
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-
-                <button
-                  onClick={handleRatingSubmit}
-                  disabled={userInfo?.role !== "user"}
-                  className={`mt-4 px-4 py-2 rounded text-gray-800  font-bold ${
-                    userInfo?.role !== "user"
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-[#c5f35b] hover:bg-[#c2f155]"
-                  }`}
-                >
-                  Submit Rating
-                </button>
+              <div className="flex space-x-2">
+                {[0, 1, 2, 3, 4].map((star, index) => {
+                  const currentRating = index + 1;
+                  return (
+                    <label key={index}>
+                      <input
+                        type="radio"
+                        disabled={userInfo?.role !== "user" || isDeadlineOver}
+                        name="rating"
+                        value={currentRating}
+                        onChange={() => setRating(currentRating)}
+                        className="hidden"
+                      />
+                      <span
+                        className={`cursor-pointer text-3xl ${
+                          currentRating <= (hover || rating)
+                            ? "text-yellow-400"
+                            : "text-gray-400"
+                        }`}
+                        onMouseEnter={() => setHover(currentRating)}
+                        onMouseLeave={() => setHover(null)}
+                      >
+                        &#9733;
+                      </span>
+                    </label>
+                  );
+                })}
               </div>
+              <button
+                onClick={handleRatingSubmit}
+                disabled={userInfo?.role !== "user"}
+                className={`mt-4 px-4 py-2 rounded font-bold transition ${
+                  userInfo?.role !== "user"
+                    ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                    : "bg-green-400 hover:bg-green-500 text-gray-800"
+                }`}
+              >
+                Submit Rating
+              </button>
             </div>
 
             {/* Register or Deadline Passed */}
-            <div className="flex w-full justify-center mt-8">
+            <div className="flex justify-center mt-8">
               {isDeadlineOver ? (
-                <p className="text-red-500 font-bold text-xl">
-                  The deadline has passed, you can no longer register.
+                <p className="text-red-500 font-semibold text-lg">
+                  The deadline has passed. You can no longer register.
                 </p>
               ) : (
                 <Link
                   state={{ price: contest.contestPrice, contest: contest }}
                   to="/dashboard/payment"
                 >
-                  <PrimaryBtn>Pay to Register</PrimaryBtn>
+                  <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    Pay to Register
+                  </button>
                 </Link>
               )}
             </div>

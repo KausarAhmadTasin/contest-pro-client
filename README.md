@@ -12,6 +12,8 @@
 
 ## Features
 
+**New Feature:** Rating option added. Only the participants who have participated in a contest can rate that particular contest even after the applition date is over. Admin and the creator of the contest cannot rate that contest.
+
 - **Admin Dashboard:** Includes controls for managing contests and users.
 - **User Roles:**
   - **Admin:** Has access to all features, including user management.
@@ -57,6 +59,54 @@
 
 - **Frontend**: Deployed on Firebase.
 - **Backend**: Deployed on Vercel.
+
+
+### Frontend-Backend Interaction
+
+**API Communication:**
+
+The frontend, built with React, used Axios and React Query for efficient API calls to the backend. Data fetching was optimized with background re-fetching.
+APIs were designed in Express.js to handle CRUD operations for contests, user management, and participant data.
+
+### Authentication:
+Firebase was used for frontend authentication, while the backend used JWT to ensure secure role-based access across endpoints.
+
+### Database Operations:
+MongoDB stored user data, contest details, and participation stats. Backend endpoints were created to query, update, and manage this data efficiently.
+
+### Stripe Integration:
+Frontend Stripe components were integrated for payment collection, with backend routes handling the server-side payment confirmation and webhook events.
+
+### Challenges Faced:
+
+**Role-Based Access Management:**
+
+Challenge: Differentiating access levels for Admin, Creator, and User in both the frontend and backend.
+Solution: Implemented a middleware in Express.js to verify JWT tokens and authorize roles. The frontend dynamically adjusted the UI based on the user role fetched during authentication.
+
+**Rating Feature Logic:**
+
+Challenge: Ensuring only participants who joined a contest could rate it, without exposing this logic to the frontend.
+Solution: Added a server-side validation to check participant eligibility before accepting ratings.
+
+**Data Synchronization:**
+Challenge: Real-time updates for participants and contest statuses were complex due to asynchronous API calls.
+Solution: Used React Query's background re-fetching and caching to ensure data consistency across components.
+
+**Stripe Payment Integration:**
+Challenge: Ensuring secure payment processing and accurate updates to the backend.
+Solution: Used Stripe’s server-side SDK to verify payments and implemented webhooks to handle asynchronous payment confirmations.
+
+
+**This project highlighted the importance of:**
+
+💠Secure and efficient API design.
+
+💠Clear role-based access control.
+
+💠The need for robust server-side validations to maintain data integrity.
+
+💠Tools like React Query and JWT in building scalable and secure applications.
 
 ## How to Run the Project
 
